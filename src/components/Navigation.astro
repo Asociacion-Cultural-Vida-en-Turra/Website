@@ -1,0 +1,59 @@
+---
+import Button from "./Button.astro";
+---
+
+<!-- TODO (Carlos): Add href links to each navigation item -->
+<nav class="navigation" aria-label="Main navigation">
+  <a class="nav-link" href="/">Inicio</a>
+  <a class="nav-link" href="/#blog">El blog</a>
+  <a class="nav-link" href="/#asociacion">La asociación</a>
+  <a class="nav-link" href="/#contacto">Contacto</a>
+
+  <Button href="/#contacto">
+    <span class="button-text">
+        <span>Participa</span>
+        <span aria-hidden="true" class="button-icon">↗</span>
+    </span>
+  </Button>
+</nav>
+
+<style>
+  .navigation {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    font-family: var(--font-body);
+  }
+
+  .button-text {
+    display: flex;
+    align-items: center;
+    font-size: 1.150em;
+    gap: 0.5em;
+  }
+
+  .nav-link {
+    color: var(--color-text-muted);
+    font-size: 1.150em;
+    font-weight: var(--font-normal);
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .nav-link:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .navigation {
+      gap: 0.75rem 1rem;
+    }
+  }
+</style>
