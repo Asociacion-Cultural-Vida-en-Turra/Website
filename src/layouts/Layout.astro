@@ -1,0 +1,30 @@
+---
+import { Font } from "astro:assets"
+import "@styles/global.css"
+
+interface Props {
+    title: string,
+    description?: string
+}
+
+const {
+    title,
+    description = "Turra de Alba"
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <title>{title} | Turra de Alba</title>
+        <meta name="description" content={description} />
+        <meta charset="UTF-8" />
+        <meta name="author" content="Carlos Espinoza Curto" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <Font cssVariable="--font-heading"/>
+        <Font cssVariable="--font-body"/>
+    </head>
+    <body>
+        <slot/>
+    </body>
+</html>

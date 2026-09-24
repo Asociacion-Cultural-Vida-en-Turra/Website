@@ -1,0 +1,59 @@
+:root {
+  /* Base colors */
+  --palette-paper: #f8f5ef;
+  --palette-white: #ffffff;
+  --palette-cream: #eee8dc;
+  --palette-olive: #3f5038;
+  --palette-ink: #293326;
+  --palette-muted: #686f61;
+  --palette-line: #d7d8cc;
+  --palette-terracotta: #945d43;
+  --palette-sage: #e0e7d9;
+  --palette-ochre: #d8b978;
+
+  --color-background: var(--palette-paper);
+  --color-surface: var(--palette-white);
+  --color-surface-muted: var(--palette-cream);
+  --color-primary: var(--palette-olive);
+  --color-primary-hover: var(--palette-ink);
+  --color-on-primary: var(--palette-paper);
+  --color-text: var(--palette-ink);
+  --color-text-muted: var(--palette-muted);
+  --color-border: var(--palette-line);
+  --color-accent: var(--palette-terracotta);
+  --color-highlight: var(--palette-sage);
+  --color-decoration: var(--palette-ochre);
+  --color-focus-ring: var(--palette-olive);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow-wrap: break-word;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+	font-size: 3.052em;
+}
+h2 {
+	font-size: 2.441em;
+}
+h3 {
+	font-size: 1.953em;
+}
+h4 {
+	font-size: 1.563em;
+}
+h5 {
+	font-size: 1.25em;
+}
