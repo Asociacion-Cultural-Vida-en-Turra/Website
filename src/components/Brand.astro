@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets"
+import logoIglesia from "@assets/logoIglesia.png"
+---
+
+<div class="brand">
+    <Image src={logoIglesia} alt="" class="brand-logo"/>
+    <span class="brand-text">
+        <span class="brand-title">Vida en Turra</span>
+        <span class="brand-subtitle">Asociación Cultural y Medioambiental</span>
+    </span>
+</div>
+
+<style>
+    .brand {
+        display: flex;
+        align-items: center;
+        color: var(--color-primary);
+    }
+    .brand-logo {
+        width: 8em;
+        height: auto;
+        margin-left: 1em;
+    }
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1em;
+        gap: 0.3em;
+    }
+    .brand-title {
+        font-family: var(--font-heading);
+        font-weight: var(--font-bold);
+        font-size: 2.5em;
+    }
+    .brand-subtitle {
+        font-family: var(--font-body);
+        font-weight: var(--font-semibold);
+        font-size: 1em;
+    }
+</style>

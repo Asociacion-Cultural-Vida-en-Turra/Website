@@ -24,6 +24,11 @@
   --color-highlight: var(--palette-sage);
   --color-decoration: var(--palette-ochre);
   --color-focus-ring: var(--palette-olive);
+
+  /* font weights */
+  --font-normal: 400;
+  --font-semibold: 600;
+  --font-bold: 900;
 }
 
 body {
@@ -37,7 +42,7 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: var(--font-normal);
   line-height: 1.2;
   text-wrap: balance;
 }
