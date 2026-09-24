@@ -2,16 +2,20 @@
 import { Image } from "astro:assets"
 import logoIglesia from "@assets/logoIglesia.png"
 ---
-
-<div class="brand">
-    <Image src={logoIglesia} alt="" class="brand-logo"/>
-    <span class="brand-text">
-        <span class="brand-title">Vida en Turra</span>
-        <span class="brand-subtitle">Asociación Cultural y Medioambiental</span>
-    </span>
-</div>
+<a href="/" class="a">
+    <div class="brand">
+        <Image src={logoIglesia} alt="" class="brand-logo"/>
+        <span class="brand-text">
+            <span class="brand-title">Vida en Turra</span>
+            <span class="brand-subtitle">Asociación Cultural y Medioambiental</span>
+        </span>
+    </div>
+</a>
 
 <style>
+    .a {
+        text-decoration: none;
+    }
     .brand {
         display: flex;
         align-items: center;
