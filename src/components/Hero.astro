@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets"
+import Button from "@components/Button.astro"
+import fotoIglesia from "@assets/fotoIglesia.jpg"
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="label">
+      <span>Turra de Alba · Un pueblo que se cuenta</span>
+    </div>
+    <div class="title">
+      <h1>
+        <span>Nuestras raíces.</span>
+        <span>Nuestras historias.</span>
+      </h1>
+    </div>
+    <div class="description">
+      <p>Un espacio para compartir lo que vivimos, lo que recordamos y todo lo que está por venir.</p>
+    </div>
+    <div class="hero-actions">
+      <Button href="/#blog">
+        <span class="button-content">
+          <span>Descubre el blog</span>
+          <span>↓</span>
+        </span>
+      </Button>
+      <Button href="/#asociacion" variant="secondary">
+        Conoce la asociación
+      </Button>
+    </div>
+  </div>
+  <div class="hero-image">
+    <Image src={fotoIglesia} alt="fotoIglesia" />
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 5rem);
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .label {
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .button-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hero-content,
+  .hero-image {
+    min-width: 0;
+  }
+
+  .hero-content h1,
+  .hero-content p {
+    margin: 0;
+  }
+
+  .hero-content h1 {
+    color: var(--color-primary);
+    font-size: clamp(2rem, 1rem + 4vw, 4rem);
+    font-weight: var(--font-normal);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .hero-content h1 span {
+    display: block;
+  }
+
+  .hero-content p {
+    max-width: 38ch;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+    line-height: 1.6;
+  }
+
+  .hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .hero {
+      max-width: 96rem;
+      min-height: 75svh;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    }
+
+    .hero-content {
+      gap: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(4rem, 5vw, 4.75rem);
+    }
+
+    .hero-content p {
+      font-size: 1.25rem;
+    }
+  }
+</style>
