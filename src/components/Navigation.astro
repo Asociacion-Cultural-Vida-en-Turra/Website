@@ -1,5 +1,6 @@
 ---
-import Button from "./Button.astro";
+import Button from "@components/Button.astro";
+import Dropdown from "@components/Dropdown.astro";
 ---
 
 <!-- TODO (Carlos): Add href links to each navigation item -->
@@ -17,6 +18,36 @@ import Button from "./Button.astro";
   </Button>
 </nav>
 
+<div class="mobile-navigation">
+    <Dropdown
+      id="navigation-dropdown"
+      label="Menú"
+      options={[
+          { label: "Inicio", href: "/" },
+          { label: "El blog", href: "/#blog" },
+          { label: "La asociación", href: "/#asociacion" },
+          { label: "Contacto", href: "/#contacto" },
+          { label: "Participa", href: "/#contacto" },
+      ]}
+    >
+        <Fragment slot="trigger">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                width="24"
+                height="24"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <rect x="2.42" y="3.7475" width="11.16" height="1.665" />
+                <rect x="2.42" y="7.1675" width="11.16" height="1.665" />
+                <rect x="2.42" y="10.5875" width="11.16" height="1.665" />
+            </svg>
+        </Fragment>
+    </Dropdown>
+</div>
+
 <style>
   .navigation {
     display: flex;
@@ -24,6 +55,20 @@ import Button from "./Button.astro";
     flex-wrap: wrap;
     gap: 1.5em;
     font-family: var(--font-body);
+  }
+
+  .mobile-navigation {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+      .navigation {
+      display: none;
+      }
+
+      .mobile-navigation {
+      display: block;
+      }
   }
 
   .button-text {
@@ -49,11 +94,5 @@ import Button from "./Button.astro";
   .nav-link:focus-visible {
     outline: 3px solid var(--color-focus-ring);
     outline-offset: 4px;
-  }
-
-  @media (max-width: 720px) {
-    .navigation {
-      gap: 0.75rem 1rem;
-    }
   }
 </style>

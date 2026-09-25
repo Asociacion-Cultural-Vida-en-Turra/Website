@@ -3,22 +3,24 @@ interface Props {
   href?: string;
   variant?: "primary" | "secondary";
   type?: "button" | "submit" | "reset";
+  size?: "small" | "medium";
 }
 
 const {
   href,
   variant = "primary",
   type = "button",
+  size = "medium",
 } = Astro.props;
 ---
 
 {
   href !== undefined ? (
-    <a href={href} class:list={["button", variant]}>
+    <a href={href} class:list={["button", variant, size]}>
       <slot />
     </a>
   ) : (
-    <button type={type} class:list={["button", variant]}>
+    <button type={type} class:list={["button", variant, size]}>
       <slot />
     </button>
   )
@@ -31,14 +33,12 @@ const {
     justify-content: center;
 
     min-height: 44px;
-    padding: 0.875rem 1.5rem;
     border: 1px solid transparent;
     border-radius: 4px;
     box-sizing: border-box;
 
     font-family: var(--font-body);
     font-weight: var(--font-semibold);
-    font-size: 0.875rem;
     line-height: 1.4;
     text-align: center;
     text-decoration: none;
@@ -69,5 +69,15 @@ const {
   .button:focus-visible {
     outline: 3px solid var(--color-focus-ring);
     outline-offset: 4px;
+  }
+
+  .button.small {
+    padding: 0.5em 0.75em;
+    font-size: 0.875em;
+  }
+
+  .button.medium {
+    padding: 0.875em 1.5em;
+    font-size: 0.875em;
   }
 </style>
