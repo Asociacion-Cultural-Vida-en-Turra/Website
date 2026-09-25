@@ -1,0 +1,98 @@
+---
+import Button from "@components/Button.astro";
+import Dropdown from "@components/Dropdown.astro";
+---
+
+<!-- TODO (Carlos): Add href links to each navigation item -->
+<nav class="navigation" aria-label="Main navigation">
+  <a class="nav-link" href="/">Inicio</a>
+  <a class="nav-link" href="/#blog">El blog</a>
+  <a class="nav-link" href="/#asociacion">La asociación</a>
+  <a class="nav-link" href="/#contacto">Contacto</a>
+
+  <Button href="/#contacto">
+    <span class="button-text">
+        <span>Participa</span>
+        <span aria-hidden="true" class="button-icon">↗</span>
+    </span>
+  </Button>
+</nav>
+
+<div class="mobile-navigation">
+    <Dropdown
+      id="navigation-dropdown"
+      label="Menú"
+      options={[
+          { label: "Inicio", href: "/" },
+          { label: "El blog", href: "/#blog" },
+          { label: "La asociación", href: "/#asociacion" },
+          { label: "Contacto", href: "/#contacto" },
+          { label: "Participa", href: "/#contacto" },
+      ]}
+    >
+        <Fragment slot="trigger">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                width="24"
+                height="24"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <rect x="2.42" y="3.7475" width="11.16" height="1.665" />
+                <rect x="2.42" y="7.1675" width="11.16" height="1.665" />
+                <rect x="2.42" y="10.5875" width="11.16" height="1.665" />
+            </svg>
+        </Fragment>
+    </Dropdown>
+</div>
+
+<style>
+  .navigation {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    font-family: var(--font-body);
+  }
+
+  .mobile-navigation {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+      .navigation {
+      display: none;
+      }
+
+      .mobile-navigation {
+      display: block;
+      }
+  }
+
+  .button-text {
+    display: flex;
+    align-items: center;
+    font-size: 1.150em;
+    gap: 0.5em;
+  }
+
+  .nav-link {
+    color: var(--color-text-muted);
+    font-size: 1.150em;
+    font-weight: var(--font-normal);
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .nav-link:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+</style>

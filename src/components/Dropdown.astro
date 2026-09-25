@@ -1,0 +1,170 @@
+---
+import Button from "./Button.astro";
+
+interface Option {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  options: Option[];
+  size?: "small" | "medium";
+}
+
+const {
+  id,
+  label,
+  options,
+  size = "small",
+} = Astro.props;
+
+const contentId = `${id}-content`;
+---
+
+<site-dropdown id={id} class="dropdown">
+  <div class="dropdown-trigger">
+    <Button
+      variant="secondary"
+      size={size}
+    >
+      <slot name="trigger">
+        <span>{label}</span>
+        <span class="dropdown-arrow" aria-hidden="true">▾</span>
+      </slot>
+    </Button>
+  </div>
+
+  <div id={contentId} class="dropdown-content">
+    {
+      options.map((option) => (
+        <a href={option.href}>{option.label}</a>
+      ))
+    }
+  </div>
+</site-dropdown>
+
+<style>
+  .dropdown {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+  }
+
+  .dropdown-trigger {
+    display: none;
+  }
+
+  .dropdown[data-ready] .dropdown-trigger {
+    display: block;
+  }
+
+  .dropdown-content {
+    padding: 0.5em;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+
+  .dropdown[data-ready] .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 50;
+
+    width: max-content;
+    min-width: min(12.5em, calc(100vw - 3em));
+    max-width: min(20em, calc(100vw - 3em));
+
+    box-shadow: 0 8px 16px rgb(0 0 0 / 10%);
+  }
+
+  .dropdown[data-ready][data-open] .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 0.75em 1em;
+    border-radius: 2px;
+
+    font-family: var(--font-body);
+    color: var(--color-text);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .dropdown-content a:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-primary);
+  }
+
+  .dropdown-content a:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+  }
+
+  .dropdown[data-open] .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  class SiteDropdown extends HTMLElement {
+    connectedCallback() {
+      if (this.hasAttribute("data-ready")) return;
+
+      const button = this.querySelector("button");
+      const content =
+        this.querySelector<HTMLElement>(".dropdown-content");
+
+      if (!button || !content) return;
+
+      const setOpen = (open: boolean) => {
+        this.toggleAttribute("data-open", open);
+      };
+
+      button.addEventListener("click", () => {
+        // Open or close the dropdown when the trigger button is clicked.
+        setOpen(!this.hasAttribute("data-open"));
+      });
+
+      this.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && this.hasAttribute("data-open")) {
+          // Close the dropdown when the Escape key is pressed.
+          event.preventDefault();
+          setOpen(false);
+          button.focus();
+        }
+      });
+
+      content.addEventListener("click", (event) => {
+        if (
+          event.target instanceof Element &&
+          event.target.closest("a")
+        ) {
+          // Close the dropdown when a link inside the content is clicked.
+          setOpen(false);
+          button.focus({ preventScroll: true });
+        }
+      });
+
+      this.addEventListener("focusout", (event) => {
+        // Close the dropdown when the focus moves outside of the component.
+        const next = event.relatedTarget;
+
+        if (!(next instanceof Node) || !this.contains(next)) {
+          setOpen(false);
+        }
+      });
+
+      this.setAttribute("data-ready", "");
+    }
+  }
+
+  if (!customElements.get("site-dropdown")) {
+    customElements.define("site-dropdown", SiteDropdown);
+  }
+</script>
