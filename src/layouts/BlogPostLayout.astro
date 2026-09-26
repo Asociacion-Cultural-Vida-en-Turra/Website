@@ -1,0 +1,190 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">["data"];
+}
+
+const { post } = Astro.props;
+const { title, description, category, date, image, imageAlt } = post;
+const dateLabel = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(date));
+---
+
+<Layout title={title} description={description}>
+  <main class="blog-post">
+    <div class="reading-column back-link">
+      <a href="/#blog"><span aria-hidden="true">←</span> Volver a las publicaciones</a>
+    </div>
+    <article aria-labelledby="post-title">
+      <header class="reading-column post-heading">
+        <p class="meta">{category} <span aria-hidden="true">·</span> <time datetime={date}>{dateLabel}</time></p>
+        <h1 id="post-title">{title}</h1>
+        <p class="intro">{description}</p>
+      </header>
+      {image && (
+        <Image
+          class="post-image"
+          src={image}
+          alt={imageAlt}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 64rem) 60rem, calc(100vw - 2rem)"
+        />
+      )}
+      <div class="reading-column prose">
+        <slot />
+      </div>
+      <footer class="reading-column post-footer">
+        <a href="/#blog"><span aria-hidden="true">←</span> Volver a las publicaciones</a>
+      </footer>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .blog-post {
+    max-width: 60rem;
+    margin-inline: auto;
+    padding: clamp(2rem, 5vw, 4rem) 1rem clamp(3rem, 7vw, 6rem);
+  }
+  .reading-column {
+    max-width: 65ch;
+    margin-inline: auto;
+    font-size: 1.125rem;
+  }
+  .back-link {
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    line-height: 1.5;
+  }
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 0.25em;
+  }
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+  a:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+  .back-link a,
+  .post-footer a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    font-size: 0.875rem;
+  }
+  .meta {
+    margin: 0 0 1rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.12;
+  }
+  .intro {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.65;
+  }
+  .post-heading {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .post-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .prose {
+    line-height: 1.8;
+  }
+  /* Markdown is rendered through the slot, so target its descendants globally. */
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-block: 0 1.5em;
+  }
+  .prose :global(h2),
+  .prose :global(h3),
+  .prose :global(h4),
+  .prose :global(h5),
+  .prose :global(h6) {
+    margin: 1.75em 0 0.75em;
+    color: var(--color-primary);
+    scroll-margin-top: 2rem;
+  }
+  .prose :global(h2) { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+  .prose :global(h3) { font-size: 1.5rem; }
+  .prose :global(h4),
+  .prose :global(h5),
+  .prose :global(h6) { font-size: 1.125rem; }
+  .prose :global(ul),
+  .prose :global(ol) { padding-left: 1.5em; }
+  .prose :global(li + li) { margin-top: 0.5em; }
+  .prose :global(a) {
+    color: var(--color-primary);
+    text-underline-offset: 0.25em;
+  }
+  .prose :global(a:hover) { color: var(--color-primary-hover); }
+  .prose :global(a:focus-visible) {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+  .prose :global(blockquote) {
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface-muted);
+    font-family: var(--font-heading);
+  }
+  .prose :global(blockquote > :last-child) { margin-bottom: 0; }
+  .prose :global(img),
+  .prose :global(video) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-block: 2rem;
+  }
+  .prose :global(pre) {
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+  }
+  .prose :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin-block: 2rem;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+  }
+  .prose :global(hr) {
+    margin-block: 2rem;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+</style>
