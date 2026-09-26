@@ -1,23 +1,6 @@
 ---
-import { getCollection } from "astro:content";
 import Button from "@components/Button.astro";
-import BlogCard from "@components/BlogCard.astro";
-
-const entries = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.localeCompare(a.data.date) || a.id.localeCompare(b.id),
-);
-const dateFormatter = new Intl.DateTimeFormat("es-ES", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-  timeZone: "UTC",
-});
-const posts = entries.map(({ id, data }) => ({
-  ...data,
-  dateLabel: dateFormatter.format(new Date(data.date)),
-  href: `/blog/${id}/`,
-}));
-const categories = ["Todas", ...new Set(posts.map((post) => post.category))];
+import BlogGrid from "@components/BlogGrid.astro";
 ---
 
 <section id="blog" class="blog" aria-labelledby="blog-title">
@@ -28,50 +11,11 @@ const categories = ["Todas", ...new Set(posts.map((post) => post.category))];
     </div>
     <p class="blog-note">Nuestro tablón, siempre abierto.</p>
   </header>
-  <blog-filters>
-    <div class="filters" role="group" aria-label="Filtrar publicaciones por categoría" hidden>
-      {categories.map((category, index) => (
-        <button type="button" data-filter={category} aria-pressed={index === 0} aria-controls="blog-posts">{category}</button>
-      ))}
-    </div>
-    <div id="blog-posts" class="posts">
-      {posts.map((post) => <BlogCard {...post} />)}
-    </div>
-    <p class="empty" hidden>No hay publicaciones de esta categoría todavía.</p>
-    <p class="sr-only" role="status" aria-live="polite"></p>
-  </blog-filters>
+  <BlogGrid id="home-blog" limit={3} />
   <div class="blog-actions">
     <Button href="/blog/" variant="secondary">Ver todas las publicaciones <span aria-hidden="true">→</span></Button>
   </div>
 </section>
-
-<script>
-  class BlogFilters extends HTMLElement {
-    connectedCallback() {
-      const filters = this.querySelector<HTMLElement>(".filters");
-      const buttons = this.querySelectorAll<HTMLButtonElement>("[data-filter]");
-      const posts = this.querySelectorAll<HTMLElement>("[data-category]");
-      const empty = this.querySelector<HTMLElement>(".empty");
-      const status = this.querySelector<HTMLElement>('[role="status"]');
-      if (!filters || !empty || !status) return;
-      filters.hidden = false;
-      buttons.forEach((button) => {
-        button.onclick = () => {
-          const category = button.dataset.filter;
-          let count = 0;
-          buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
-          posts.forEach((post) => {
-            post.hidden = category !== "Todas" && post.dataset.category !== category;
-            if (!post.hidden) count++;
-          });
-          empty.hidden = count !== 0;
-          status.textContent = `${count} ${count === 1 ? "publicación" : "publicaciones"} en ${category}.`;
-        };
-      });
-    }
-  }
-  if (!customElements.get("blog-filters")) customElements.define("blog-filters", BlogFilters);
-</script>
 
 <style>
   .blog {
@@ -105,52 +49,6 @@ const categories = ["Todas", ...new Set(posts.map((post) => post.category))];
     font-size: 0.875rem;
     line-height: 1.6;
   }
-  blog-filters {
-    display: block;
-  }
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1.875rem;
-  }
-  .filters[hidden],
-  .empty[hidden] {
-    display: none;
-  }
-  .filters button {
-    min-height: 3.125rem;
-    padding: 0.75rem 1.375rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--color-primary);
-    font: inherit;
-    font-size: 0.875rem;
-    cursor: pointer;
-  }
-  .filters button:hover {
-    background: var(--color-surface-muted);
-  }
-  .filters button[aria-pressed="true"] {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-on-primary);
-  }
-  .filters button:focus-visible {
-    outline: 3px solid var(--color-focus-ring);
-    outline-offset: 4px;
-  }
-  .posts {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 2.5rem 1.375rem;
-  }
-  .empty {
-    color: var(--color-text-muted);
-    padding-block: 2rem;
-  }
   .blog-actions {
     display: flex;
     justify-content: center;
@@ -158,27 +56,6 @@ const categories = ["Todas", ...new Set(posts.map((post) => post.category))];
   }
   .blog-actions span {
     margin-left: 0.5rem;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
-  }
-  @media (min-width: 40rem) {
-    .posts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 64rem) {
-    .posts {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
   @media (min-width: 75rem) {
     .blog {
