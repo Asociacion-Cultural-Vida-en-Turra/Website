@@ -59,22 +59,3 @@ The collection schema in `src/content.config.ts` validates these fields:
 | `imageAlt` | String | No | `""` | Alternative text describing the image. Leave empty only for decorative images. |
 | `coverLines` | Array of strings | No | `[]` | Text cover content when no image is provided. Each item appears on a separate line. |
 | `tone` | String: `"sage"` or `"cream"` | No | `"sage"` | Background color variant for the text cover. Has no effect when an image is provided. |
-
-The cover can use `coverLines` and `tone`, or a local image:
-
-```yaml
-image: "../../assets/fotoIglesia.jpg"
-imageAlt: "Church in Turra de Alba"
-```
-
-The image takes priority over the text cover. Describe the photo in
-`imageAlt`; leave it empty only if the image is decorative.
-
-The section loads all posts, sorts them from newest to oldest, and generates
-filters from their categories. `Todas` (Spanish for "All") is reserved for the
-filter that shows all posts. You do not need to modify the components or write
-`dateLabel` or `href`: they are calculated automatically. The filename determines
-the link, for example `/blog/village-festival/`.
-
-Run `npm run build` to validate the content. Publishing changes to the static
-site requires rebuilding and deploying it.
