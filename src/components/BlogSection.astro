@@ -11,7 +11,7 @@ import BlogGrid from "@components/BlogGrid.astro";
     </div>
     <p class="blog-note">Nuestro tablón, siempre abierto.</p>
   </header>
-  <BlogGrid id="home-blog" />
+  <BlogGrid id="home-blog" limit={3} />
   <div class="blog-actions">
     <Button href="/blog/" variant="secondary">Ver todas las publicaciones <span aria-hidden="true">→</span></Button>
   </div>
