@@ -33,6 +33,7 @@ const { headingLevel: Heading = "h3", title, category, date, dateLabel, descript
 
 <style>
   .post {
+    position: relative;
     min-width: 0;
   }
   .cover {
@@ -92,11 +93,19 @@ const { headingLevel: Heading = "h3", title, category, date, dateLabel, descript
   a span {
     margin-left: 0.25rem;
   }
+  a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
   a:hover {
     text-decoration: underline;
     text-underline-offset: 0.25em;
   }
   a:focus-visible {
+    outline: none;
+  }
+  a:focus-visible::after {
     outline: 3px solid var(--color-focus-ring);
     outline-offset: 4px;
   }
