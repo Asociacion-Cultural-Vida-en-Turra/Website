@@ -26,7 +26,22 @@ const {
         <Font cssVariable="--font-body"/>
     </head>
     <body>
-        <Header/>
+        {Astro.slots.has("hero") ? (
+            <div class="page-intro">
+                <Header />
+                <slot name="hero" />
+            </div>
+        ) : <Header />}
         <slot/>
     </body>
 </html>
+
+<style>
+    @media (min-width: 48rem) {
+        .page-intro {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            min-height: 100svh;
+        }
+    }
+</style>

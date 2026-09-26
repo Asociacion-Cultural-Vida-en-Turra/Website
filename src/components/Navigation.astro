@@ -50,24 +50,23 @@ import Dropdown from "@components/Dropdown.astro";
 
 <style>
   .navigation {
-    display: flex;
+    display: none;
     align-items: center;
-    flex-wrap: wrap;
     gap: 1.5em;
     font-family: var(--font-body);
   }
 
   .mobile-navigation {
-    display: none;
+    display: block;
   }
 
-  @media (max-width: 720px) {
+  @media (min-width: 75rem) {
       .navigation {
-      display: none;
+      display: flex;
       }
 
       .mobile-navigation {
-      display: block;
+      display: none;
       }
   }
 
