@@ -78,6 +78,3 @@ the link, for example `/blog/village-festival/`.
 
 Run `npm run build` to validate the content. Publishing changes to the static
 site requires rebuilding and deploying it.
-
-Individual article pages and the `/blog/` listing are still pending. For now,
-this collection supplies the homepage cards.
