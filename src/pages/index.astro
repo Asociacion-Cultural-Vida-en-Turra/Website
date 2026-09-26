@@ -1,8 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Hero from "@components/Hero.astro";
+import BlogSection from "@components/BlogSection.astro";
 ---
 
 <Layout title="Mi blog">
-	<Hero />
+	<Hero slot="hero" />
+	<BlogSection />
 </Layout>
