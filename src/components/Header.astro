@@ -2,11 +2,17 @@
 import "@styles/global.css"
 import Brand from "@components/Brand.astro"
 import Navigation from "@components/Navigation.astro"
+
+interface Props {
+    showNavigation?: boolean;
+}
+
+const { showNavigation = true } = Astro.props;
 ---
 
 <header>
     <Brand />
-    <Navigation />
+    {showNavigation && <Navigation />}
 </header>
 
 <style>
