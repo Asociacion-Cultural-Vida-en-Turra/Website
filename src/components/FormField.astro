@@ -1,0 +1,119 @@
+---
+import type { FieldConfig } from "../forms/types";
+
+interface Props {
+  formId: string;
+  field: FieldConfig;
+}
+
+const { formId, field } = Astro.props;
+const id = `${formId}-${field.name}`;
+const label = `${field.label}${field.required ? "" : " (opcional)"}`;
+const attributes = {
+  id,
+  name: field.name,
+  required: field.required,
+  "aria-describedby": field.helpText ? `${id}-help ${id}-error` : `${id}-error`,
+  "data-required-message": field.requiredMessage,
+  "data-field-type": field.type,
+  "data-validation": field.validation,
+  "data-validation-field": field.validationField,
+};
+---
+
+<div class:list={["field", { "full-width": field.fullWidth }]}>
+  {field.type === "checkbox" ? (
+    <label class="checkbox" for={id}>
+      <input {...attributes} type="checkbox" />
+      <span>{label}</span>
+    </label>
+  ) : (
+    <>
+      <label for={id}>{label}</label>
+      {field.type === "select" ? (
+        <select {...attributes}>
+          <option value="">{field.placeholder ?? "Selecciona una opción"}</option>
+          {field.options?.map((option) => <option value={option.value}>{option.label}</option>)}
+        </select>
+      ) : field.type === "textarea" ? (
+        <textarea {...attributes} placeholder={field.placeholder} rows={field.rows ?? 5} maxlength={field.maxLength}></textarea>
+      ) : (
+        <input {...attributes} type={field.type} autocomplete={field.autocomplete} placeholder={field.placeholder} maxlength={field.maxLength} />
+      )}
+    </>
+  )}
+  {field.helpText && <p id={`${id}-help`} class="help">{field.helpText}</p>}
+  <p id={`${id}-error`} class="error" hidden></p>
+</div>
+
+<style>
+  .field {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  label {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  input:not([type="checkbox"]), textarea, select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.875rem 1rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    line-height: 1.5;
+  }
+  textarea {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+  }
+  input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"] {
+    border-color: var(--color-accent);
+  }
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .checkbox input {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    margin: 0.0625rem 0 0;
+    accent-color: var(--color-primary);
+  }
+  .error {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  .help {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  @media (min-width: 48rem) {
+    .full-width {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
