@@ -1,5 +1,6 @@
 ---
 import Form from "@components/Form.astro";
+import { contactForm } from "../forms/contact";
 ---
 
 <section id="contacto" class="contact" aria-labelledby="contact-title">
@@ -13,7 +14,7 @@ import Form from "@components/Form.astro";
     </div>
   </div>
 
-  <Form id="contact-form" />
+  <Form id="contact-form" {...contactForm} />
 </section>
 
 <style>

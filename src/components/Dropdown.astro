@@ -4,6 +4,7 @@ import Button from "./Button.astro";
 interface Option {
   label: string;
   href: string;
+  target?: "_self" | "_blank";
 }
 
 interface Props {
@@ -39,7 +40,7 @@ const contentId = `${id}-content`;
   <div id={contentId} class="dropdown-content">
     {
       options.map((option) => (
-        <a href={option.href}>{option.label}</a>
+        <a href={option.href} target={option.target} rel={option.target === "_blank" ? "noopener noreferrer" : undefined}>{option.label}</a>
       ))
     }
   </div>

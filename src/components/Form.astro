@@ -1,63 +1,60 @@
 ---
 import Button from "@components/Button.astro";
+import FormField from "@components/FormField.astro";
+import type { FormConfig } from "../forms/types";
 
-interface Props {
+interface Props extends FormConfig {
   /** Unique prefix for field IDs; generated automatically when omitted. */
   id?: string;
 }
 
-const { id = `form-${crypto.randomUUID()}` } = Astro.props;
+const {
+  id = `form-${crypto.randomUUID()}`,
+  fields,
+  legend,
+  submitLabel = "Enviar",
+  note = "Los campos indicados como opcionales pueden dejarse vacíos. El envío aún no está disponible.",
+  validMessage = "Los datos son válidos. El envío aún no está disponible; no se ha enviado ningún dato.",
+} = Astro.props;
+
+const names = fields.map((field) => field.name);
+if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.test(name))) {
+  throw new Error("Form: cada campo debe tener un name único, no vacío y sin espacios.");
+}
 ---
 
-<form id={id} data-validated-form aria-describedby={`${id}-note`}>
+<form id={id} data-validated-form data-valid-message={validMessage} aria-describedby={`${id}-note`}>
   <fieldset disabled>
-    <legend class="sr-only">Formulario de contacto</legend>
+    <legend class="sr-only">{legend}</legend>
     <div class="form-fields">
-      <div class="field">
-        <label for={`${id}-name`}>Nombre</label>
-        <input id={`${id}-name`} name="name" type="text" autocomplete="name" placeholder="Tu nombre" maxlength="120" required aria-describedby={`${id}-name-error`} />
-        <p id={`${id}-name-error`} class="error" hidden></p>
-      </div>
-      <div class="field">
-        <label for={`${id}-email`}>Correo electrónico</label>
-        <input id={`${id}-email`} name="email" type="email" autocomplete="email" placeholder="tu@correo.es" maxlength="254" required aria-describedby={`${id}-email-error`} />
-        <p id={`${id}-email-error`} class="error" hidden></p>
-      </div>
-      <div class="field full-width">
-        <label for={`${id}-message`}>Mensaje</label>
-        <textarea id={`${id}-message`} name="message" placeholder="Cuéntanos tu idea…" rows="5" maxlength="5000" required aria-describedby={`${id}-message-error`}></textarea>
-        <p id={`${id}-message-error`} class="error" hidden></p>
-      </div>
-      <div class="field full-width">
-        <label class="privacy" for={`${id}-privacy`}>
-          <input id={`${id}-privacy`} name="privacy" type="checkbox" required aria-describedby={`${id}-privacy-error`} />
-          <span>He leído y acepto la política de privacidad.</span>
-        </label>
-        <p id={`${id}-privacy-error`} class="error" hidden></p>
-      </div>
+      {fields.map((field) => <FormField formId={id} field={field} />)}
     </div>
-    <Button type="submit">Enviar mensaje <span aria-hidden="true">↗</span></Button>
+    <Button type="submit">{submitLabel} <span aria-hidden="true">↗</span></Button>
   </fieldset>
-  <p id={`${id}-note`} class="form-note">Todos los campos son obligatorios. El envío aún no está disponible.</p>
+  <p id={`${id}-note`} class="form-note">{note}</p>
   <p id={`${id}-status`} class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
 </form>
 
 <script>
+  import { getFieldError } from "../forms/validation";
+  import type { FieldConfig } from "../forms/types";
+
   document.querySelectorAll<HTMLFormElement>("[data-validated-form]").forEach((form) => {
-    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea"));
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input, textarea, select"));
     const status = form.querySelector<HTMLParagraphElement>(".form-status")!;
 
-    function validateField(field: HTMLInputElement | HTMLTextAreaElement) {
-      let message = "";
-      if (field instanceof HTMLInputElement && field.type === "checkbox") {
-        if (!field.checked) message = "Debes aceptar la política de privacidad.";
-      } else if (!field.value.trim()) {
-        message = field.name === "name" ? "Escribe tu nombre." : field.name === "email" ? "Escribe tu correo electrónico." : "Escribe un mensaje.";
-      } else if (field.validity.typeMismatch) {
-        message = "Introduce un correo electrónico válido, como tu@correo.es.";
-      } else if (field.validity.tooLong) {
-        message = `Usa un máximo de ${field.maxLength} caracteres.`;
-      }
+    function validateField(field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
+      const message = getFieldError({
+        type: field.dataset.fieldType as FieldConfig["type"],
+        validation: field.dataset.validation as FieldConfig["validation"],
+        documentType: fields.find((candidate) => candidate.name === field.dataset.validationField)?.value,
+        value: field.value,
+        required: field.required,
+        requiredMessage: field.dataset.requiredMessage,
+        maxLength: field instanceof HTMLSelectElement ? undefined : field.maxLength,
+        checked: field instanceof HTMLInputElement ? field.checked : undefined,
+        typeMismatch: field.validity.typeMismatch,
+      });
 
       const error = field.closest(".field")!.querySelector<HTMLParagraphElement>(".error")!;
       error.textContent = message;
@@ -72,8 +69,14 @@ const { id = `form-${crypto.randomUUID()}` } = Astro.props;
         status.textContent = "";
         if (field.getAttribute("aria-invalid") === "true") validateField(field);
       });
-      if (field instanceof HTMLInputElement && field.type === "checkbox") {
-        field.addEventListener("change", () => validateField(field));
+      if (field instanceof HTMLSelectElement || (field instanceof HTMLInputElement && field.type === "checkbox")) {
+        field.addEventListener("change", () => {
+          status.textContent = "";
+          validateField(field);
+          fields.filter((dependent) => dependent.dataset.validationField === field.name).forEach((dependent) => {
+            if (dependent.value || dependent.hasAttribute("aria-invalid")) validateField(dependent);
+          });
+        });
       }
     });
 
@@ -86,7 +89,7 @@ const { id = `form-${crypto.randomUUID()}` } = Astro.props;
         invalidFields[0].focus();
         return;
       }
-      status.textContent = "Los datos son válidos. El envío aún no está disponible; tu mensaje no se ha enviado.";
+      status.textContent = form.dataset.validMessage ?? "Los datos son válidos. El envío aún no está disponible.";
     });
 
     // Enable only after attaching the handler: this preview must never submit data.
@@ -96,7 +99,7 @@ const { id = `form-${crypto.randomUUID()}` } = Astro.props;
 </script>
 
 <style>
-  form, .field {
+  form {
     min-width: 0;
   }
   fieldset {
@@ -109,63 +112,6 @@ const { id = `form-${crypto.randomUUID()}` } = Astro.props;
     display: grid;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  label {
-    font-size: 0.875rem;
-    line-height: 1.5;
-  }
-  input:not([type="checkbox"]), textarea {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 3rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 0.875rem 1rem;
-    background: var(--color-surface);
-    color: var(--color-text);
-    font: inherit;
-    line-height: 1.5;
-  }
-  textarea {
-    min-height: 7.5rem;
-    resize: vertical;
-  }
-  input::placeholder, textarea::placeholder {
-    color: var(--color-text-muted);
-    opacity: 1;
-  }
-  input:focus-visible, textarea:focus-visible {
-    outline: 3px solid var(--color-focus-ring);
-    outline-offset: 3px;
-  }
-  input[aria-invalid="true"], textarea[aria-invalid="true"] {
-    border-color: var(--color-accent);
-  }
-  .privacy {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    color: var(--color-text-muted);
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-  .privacy input {
-    flex-shrink: 0;
-    width: 1rem;
-    height: 1rem;
-    margin: 0.0625rem 0 0;
-    accent-color: var(--color-primary);
-  }
-  .error {
-    margin: 0;
-    color: var(--color-accent);
-    font-size: 0.8125rem;
-    line-height: 1.5;
   }
   .form-note {
     margin: 1rem 0 0;
@@ -196,9 +142,6 @@ const { id = `form-${crypto.randomUUID()}` } = Astro.props;
   @media (min-width: 48rem) {
     .form-fields {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .full-width {
-      grid-column: 1 / -1;
     }
   }
 </style>

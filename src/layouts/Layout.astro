@@ -5,12 +5,14 @@ import Header from "@components/Header.astro"
 
 interface Props {
     title: string,
-    description?: string
+    description?: string,
+    showNavigation?: boolean
 }
 
 const {
     title,
-    description = "Turra de Alba"
+    description = "Turra de Alba",
+    showNavigation = true
 } = Astro.props
 ---
 
@@ -28,10 +30,10 @@ const {
     <body>
         {Astro.slots.has("hero") ? (
             <div class="page-intro">
-                <Header />
+                <Header showNavigation={showNavigation} />
                 <slot name="hero" />
             </div>
-        ) : <Header />}
+        ) : <Header showNavigation={showNavigation} />}
         <slot/>
     </body>
 </html>
