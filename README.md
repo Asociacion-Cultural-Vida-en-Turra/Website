@@ -228,3 +228,26 @@ Changing the select revalidates the dependent field if it already contains a val
 Errors appear when leaving a field and update as they are corrected. Clicking the button validates all fields and moves focus to the first invalid field. Selects and checkboxes are also validated when they change.
 
 Currently, forms **only validate in the browser: they do not submit or store data, or collect payments**. They remain disabled until JavaScript initializes. Run `npm test` to check the validation rules.
+
+## Deploying to GitHub Pages
+
+The site is configured for:
+
+https://asociacion-cultural-vida-en-turra.github.io/Website/
+
+`astro.config.mjs` sets `site`, `base: "/Website"` and `trailingSlash: "always"`.
+Internal links use `import.meta.env.BASE_URL`, which includes the trailing slash.
+Use the same pattern for new links:
+
+```astro
+<a href={import.meta.env.BASE_URL}>Home</a>
+<a href={`${import.meta.env.BASE_URL}blog/`}>Blog</a>
+<a href={`${import.meta.env.BASE_URL}#contacto`}>Contact</a>
+```
+
+The local development and preview URL also includes `/Website/`, for example
+`http://localhost:4321/Website/`.
+
+For a custom domain, update `site`, change `base` to `/`, and configure the domain
+and DNS in GitHub Pages. Links using `BASE_URL` will adapt automatically.
+See the [official Astro deployment guide](https://docs.astro.build/en/guides/deploy/github/).
