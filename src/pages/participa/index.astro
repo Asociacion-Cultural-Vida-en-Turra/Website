@@ -1,0 +1,73 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Form from "@components/Form.astro";
+import { membershipForm } from "../../forms/membership";
+---
+
+<Layout showNavigation={false} title="Participa" description="Forma parte de la Asociación Cultural y Medioambiental Vida en Turra. Solicitud de inscripción de nuevos socios.">
+  <main class="participate" aria-labelledby="participate-title">
+    <header class="page-heading">
+      <p class="eyebrow">Participa · Vida en Turra</p>
+      <h1 id="participate-title">Nuestro pueblo, contigo.</h1>
+      <p class="intro">Súmate a la Asociación Cultural y Medioambiental «Vida en Turra» y comparte las ganas de mantener vivo nuestro pueblo.</p>
+    </header>
+    <section class="membership-form" aria-labelledby="membership-form-title">
+      <h2 id="membership-form-title">Hazte socio</h2>
+      <p class="form-intro">Ser socio conlleva una contribución económica anual para apoyar a la asociación. Completa tus datos y selecciona cuánto quieres contribuir al año. El envío todavía no está habilitado.</p>
+      <Form id="membership-form" {...membershipForm} />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .participate {
+    box-sizing: border-box;
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
+  }
+
+  .page-heading {
+    max-width: 48rem;
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  .intro {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  h2 {
+    margin: 0 0 1.5rem;
+    color: var(--color-primary);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .form-intro {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .membership-form {
+    min-width: 0;
+  }
+
+</style>
