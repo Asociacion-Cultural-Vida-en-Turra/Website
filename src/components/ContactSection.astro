@@ -1,0 +1,72 @@
+---
+import Form from "@components/Form.astro";
+---
+
+<section id="contacto" class="contact" aria-labelledby="contact-title">
+  <div class="contact-intro">
+    <p class="eyebrow">Estamos cerca</p>
+    <h2 id="contact-title">¿Tienes algo<br />que contarnos?</h2>
+    <p class="description">Una idea para el pueblo, una foto para el blog o ganas de sumarte. Nos encantará saber de ti.</p>
+    <div class="contact-details">
+      <p class="location">Turra de Alba</p>
+      <p>Tu mensaje llegará a la asociación.</p>
+    </div>
+  </div>
+
+  <Form id="contact-form" />
+</section>
+
+<style>
+  .contact {
+    box-sizing: border-box;
+    display: grid;
+    gap: 2.5rem;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
+    scroll-margin-top: 2rem;
+  }
+  .contact-intro {
+    max-width: 30rem;
+  }
+  .eyebrow {
+    margin: 0 0 1.5rem;
+    color: var(--color-primary);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+  }
+  h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+  .description {
+    margin: 1.5rem 0;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+  .contact-details {
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .contact-details p {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+  }
+  .contact-details .location {
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+  }
+  @media (min-width: 48rem) {
+    .contact {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(3rem, 7vw, 8rem);
+    }
+  }
+  @media (min-width: 75rem) {
+    .contact {
+      max-width: 96rem;
+    }
+  }
+</style>
