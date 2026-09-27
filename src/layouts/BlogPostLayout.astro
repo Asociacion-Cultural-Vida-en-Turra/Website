@@ -127,19 +127,31 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
     color: var(--color-primary);
     scroll-margin-top: 2rem;
   }
-  .prose :global(h2) { font-size: clamp(1.75rem, 3vw, 2.25rem); }
-  .prose :global(h3) { font-size: 1.5rem; }
+  .prose :global(h2) {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+  }
+  .prose :global(h3) {
+    font-size: 1.5rem;
+  }
   .prose :global(h4),
   .prose :global(h5),
-  .prose :global(h6) { font-size: 1.125rem; }
+  .prose :global(h6) {
+    font-size: 1.125rem;
+  }
   .prose :global(ul),
-  .prose :global(ol) { padding-left: 1.5em; }
-  .prose :global(li + li) { margin-top: 0.5em; }
+  .prose :global(ol) {
+    padding-left: 1.5em;
+  }
+  .prose :global(li + li) {
+    margin-top: 0.5em;
+  }
   .prose :global(a) {
     color: var(--color-primary);
     text-underline-offset: 0.25em;
   }
-  .prose :global(a:hover) { color: var(--color-primary-hover); }
+  .prose :global(a:hover) {
+    color: var(--color-primary-hover);
+  }
   .prose :global(a:focus-visible) {
     outline: 3px solid var(--color-focus-ring);
     outline-offset: 4px;
@@ -151,7 +163,9 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
     background: var(--color-surface-muted);
     font-family: var(--font-heading);
   }
-  .prose :global(blockquote > :last-child) { margin-bottom: 0; }
+  .prose :global(blockquote > :last-child) {
+    margin-bottom: 0;
+  }
   .prose :global(img),
   .prose :global(video) {
     display: block;
