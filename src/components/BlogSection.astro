@@ -13,7 +13,7 @@ import BlogGrid from "@components/BlogGrid.astro";
   </header>
   <BlogGrid id="home-blog" limit={3} />
   <div class="blog-actions">
-    <Button href="/blog/" variant="secondary">Ver todas las publicaciones <span aria-hidden="true">→</span></Button>
+    <Button href={`${import.meta.env.BASE_URL}blog/`} variant="secondary">Ver todas las publicaciones <span aria-hidden="true">→</span></Button>
   </div>
 </section>
 

@@ -20,7 +20,7 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
 <Layout title={title} description={description}>
   <main class="blog-post">
     <div class="reading-column back-link">
-      <a href="/blog/"><span aria-hidden="true">←</span> Volver a las publicaciones</a>
+      <a href={`${import.meta.env.BASE_URL}blog/`}><span aria-hidden="true">←</span> Volver a las publicaciones</a>
     </div>
     <article aria-labelledby="post-title">
       <header class="reading-column post-heading">
@@ -41,7 +41,7 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
         <slot />
       </div>
       <footer class="reading-column post-footer">
-        <a href="/blog/"><span aria-hidden="true">←</span> Volver a las publicaciones</a>
+        <a href={`${import.meta.env.BASE_URL}blog/`}><span aria-hidden="true">←</span> Volver a las publicaciones</a>
       </footer>
     </article>
   </main>

@@ -14,7 +14,7 @@ import Map from "@components/Map.astro";
         <p class="association-name">Asociación Cultural y Medioambiental «Vida en Turra»</p>
         <p class="lead">Un lugar para encontrarnos, compartir ideas y mantener viva la vida de Turra de Alba.</p>
         <p class="description">Este blog reúne nuestras noticias, encuentros y recuerdos. Para quienes viven aquí y para quienes llevan el pueblo consigo, estén donde estén.</p>
-        <Button href="/participa/" target="_blank" variant="secondary">Quiero participar <span aria-hidden="true">↗</span></Button>
+        <Button href={`${import.meta.env.BASE_URL}participa/`} target="_blank" variant="secondary">Quiero participar <span aria-hidden="true">↗</span></Button>
       </div>
     </div>
     <Map address="Turra de Alba, 37871, Salamanca" />

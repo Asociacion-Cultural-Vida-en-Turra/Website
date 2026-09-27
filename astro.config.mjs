@@ -1,6 +1,9 @@
 import { defineConfig, fontProviders } from "astro/config"
 
 export default defineConfig({
+  site: "https://asociacion-cultural-vida-en-turra.github.io",
+  base: "/Website",
+  trailingSlash: "always",
   fonts: [
     {
       provider: fontProviders.google(),
