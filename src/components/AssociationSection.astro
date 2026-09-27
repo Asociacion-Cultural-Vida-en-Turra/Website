@@ -1,0 +1,89 @@
+---
+import Button from "@components/Button.astro";
+import Map from "@components/Map.astro";
+---
+
+<section id="asociacion" class="association" aria-labelledby="association-title">
+  <div class="association-content">
+    <div class="association-intro">
+      <header>
+        <p class="eyebrow">La asociación</p>
+        <h2 id="association-title">Lo que nos une<br />es nuestro pueblo.</h2>
+      </header>
+      <div class="association-description">
+        <p class="association-name">Asociación Cultural y Medioambiental «Vida en Turra»</p>
+        <p class="lead">Un lugar para encontrarnos, compartir ideas y mantener viva la vida de Turra de Alba.</p>
+        <p class="description">Este blog reúne nuestras noticias, encuentros y recuerdos. Para quienes viven aquí y para quienes llevan el pueblo consigo, estén donde estén.</p>
+        <Button href="#contacto" variant="secondary">Quiero participar <span aria-hidden="true">↗</span></Button>
+      </div>
+    </div>
+    <Map address="Turra de Alba, 37871, Salamanca" />
+  </div>
+</section>
+
+<style>
+  .association {
+    background: var(--color-surface-muted);
+    scroll-margin-top: 2rem;
+  }
+
+  .association-content {
+    box-sizing: border-box;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
+  }
+
+  .association-intro {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .association-name {
+    margin: 0 0 1rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: var(--font-semibold);
+    line-height: 1.6;
+  }
+
+  .lead {
+    margin: 0 0 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .description {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  @media (min-width: 48rem) {
+    .association-intro {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(3rem, 7vw, 8rem);
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .association-content {
+      max-width: 96rem;
+    }
+  }
+</style>

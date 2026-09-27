@@ -1,0 +1,118 @@
+---
+interface Props {
+  address: string;
+  title?: string;
+  /** Address, place name or coordinates to locate; defaults to the visible address. */
+  query?: string;
+  zoom?: number;
+  /** Optional iframe src from Google Maps → Share → Embed a map. */
+  embedUrl?: string;
+  directionsUrl?: string;
+}
+
+const {
+  address,
+  title = "Dónde estamos",
+  query = address,
+  zoom = 15,
+  embedUrl,
+  directionsUrl,
+} = Astro.props;
+
+const mapParams = new URLSearchParams({
+  q: query,
+  z: String(zoom),
+  output: "embed",
+});
+const directionsParams = new URLSearchParams({
+  api: "1",
+  destination: query,
+});
+const source = embedUrl ?? `https://www.google.com/maps?${mapParams}`;
+const directions = directionsUrl ?? `https://www.google.com/maps/dir/?${directionsParams}`;
+---
+
+<figure class="map">
+  <iframe
+    src={source}
+    title={`${title}: ${address}`}
+    width="800"
+    height="360"
+    loading="lazy"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+  <figcaption>
+    <div class="map-location">
+      <p class="map-title">{title}</p>
+      <p class="map-address">{address}</p>
+    </div>
+    <a href={directions} target="_blank" rel="noopener noreferrer">Cómo llegar <span aria-hidden="true">↗</span></a>
+  </figcaption>
+</figure>
+
+<style>
+  .map {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-background);
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: clamp(16rem, 35vw, 22.5rem);
+    border: 0;
+  }
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .map-location {
+    min-width: 0;
+  }
+
+  .map-title {
+    margin: 0 0 0.5rem;
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+  }
+
+  .map-address {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+</style>
