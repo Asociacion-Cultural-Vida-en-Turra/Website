@@ -1,6 +1,7 @@
 ---
 interface Props {
   href?: string;
+  target?: "_self" | "_blank";
   variant?: "primary" | "secondary";
   type?: "button" | "submit" | "reset";
   size?: "small" | "medium";
@@ -8,6 +9,7 @@ interface Props {
 
 const {
   href,
+  target,
   variant = "primary",
   type = "button",
   size = "medium",
@@ -16,7 +18,7 @@ const {
 
 {
   href !== undefined ? (
-    <a href={href} class:list={["button", variant, size]}>
+    <a href={href} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined} class:list={["button", variant, size]}>
       <slot />
     </a>
   ) : (

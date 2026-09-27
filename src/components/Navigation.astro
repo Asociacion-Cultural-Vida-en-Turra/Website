@@ -10,7 +10,7 @@ import Dropdown from "@components/Dropdown.astro";
   <a class="nav-link" href="/#asociacion">La asociación</a>
   <a class="nav-link" href="/#contacto">Contacto</a>
 
-  <Button href="/#contacto">
+  <Button href="/participa/" target="_blank">
     <span class="button-text">
         <span>Participa</span>
         <span aria-hidden="true" class="button-icon">↗</span>
@@ -27,7 +27,7 @@ import Dropdown from "@components/Dropdown.astro";
           { label: "El blog", href: "/blog/" },
           { label: "La asociación", href: "/#asociacion" },
           { label: "Contacto", href: "/#contacto" },
-          { label: "Participa", href: "/#contacto" },
+          { label: "Participa", href: "/participa/", target: "_blank" },
       ]}
     >
         <Fragment slot="trigger">
