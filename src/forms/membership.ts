@@ -3,9 +3,10 @@ import type { FormConfig } from "./types";
 export const membershipForm = {
   legend: "Solicitud de alta de socio",
   submitLabel: "Solicitar inscripción",
-  note: "Nombre, apellidos, tipo y número de documento, correo, contribución anual y aceptación de privacidad son obligatorios. El envío aún no está disponible; este formulario no registra inscripciones ni realiza cobros.",
-  validMessage:
-    "Los datos son válidos. El envío aún no está disponible; tu solicitud no se ha enviado ni se ha registrado tu inscripción.",
+  accessKey: import.meta.env.PUBLIC_WEB3FORMS_MEMBERSHIP_KEY,
+  subject: "Vida en Turra · Nueva solicitud de socio",
+  note: "Nombre, apellidos, tipo y número de documento, correo, contribución anual y aceptación de privacidad son obligatorios. La asociación revisará tu solicitud.",
+  successMessage: "Tu solicitud se ha enviado. La asociación se pondrá en contacto contigo para gestionar el alta.",
   fields: [
     {
       name: "name",
