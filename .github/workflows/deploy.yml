@@ -24,7 +24,7 @@ jobs:
           node-version: 24
           build-cmd: npm test && npm run build
         env:
-          PUBLIC_WEB3FORMS_KEY: ${{ env.PUBLIC_WEB3FORMS_KEY }}
+          PUBLIC_WEB3FORMS_KEY: ${{ vars.PUBLIC_WEB3FORMS_KEY }}
 
   deploy:
     if: github.ref == 'refs/heads/main'
