@@ -80,7 +80,7 @@ import type { FormConfig } from "./types";
 export const activityForm = {
   legend: "Suggest an activity",
   submitLabel: "Send proposal",
-  accessKey: import.meta.env.PUBLIC_WEB3FORMS_CONTACT_KEY,
+  accessKey: import.meta.env.PUBLIC_WEB3FORMS_KEY,
   subject: "Vida en Turra · Activity proposal",
   successMessage: "Tu propuesta se ha enviado correctamente.",
   fields: [
@@ -147,8 +147,7 @@ Forms send data directly from the browser to Web3Forms. An Web3Forms public acce
 For this website, contact and membership forms are configured to load the access keys configured using the following environment variables:
 
 ```dotenv
-PUBLIC_WEB3FORMS_CONTACT_KEY=your-contact-form-key
-PUBLIC_WEB3FORMS_MEMBERSHIP_KEY=your-membership-form-key
+PUBLIC_WEB3FORMS_KEY=your-key
 ```
 Make sure to configure them using a `.env` file.
 
