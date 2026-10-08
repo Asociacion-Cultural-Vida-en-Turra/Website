@@ -22,5 +22,7 @@ export interface FormConfig {
   legend: string;
   submitLabel?: string;
   note?: string;
-  validMessage?: string;
+  accessKey?: string;
+  subject?: string;
+  successMessage?: string;
 }

@@ -13,8 +13,10 @@ const {
   fields,
   legend,
   submitLabel = "Enviar",
-  note = "Los campos indicados como opcionales pueden dejarse vacíos. El envío aún no está disponible.",
-  validMessage = "Los datos son válidos. El envío aún no está disponible; no se ha enviado ningún dato.",
+  note = "Los campos indicados como opcionales pueden dejarse vacíos.",
+  accessKey = "",
+  subject = legend,
+  successMessage = "El formulario se ha enviado correctamente.",
 } = Astro.props;
 
 const names = fields.map((field) => field.name);
@@ -23,15 +25,21 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
 }
 ---
 
-<form id={id} data-validated-form data-valid-message={validMessage} aria-describedby={`${id}-note`}>
+<form id={id} action="https://api.web3forms.com/submit" method="POST" data-validated-form data-access-key={accessKey.trim()} data-success-message={successMessage} aria-describedby={`${id}-note`}>
   <fieldset disabled>
     <legend class="sr-only">{legend}</legend>
+    <input type="hidden" name="access_key" value={accessKey.trim()} />
+    <input type="hidden" name="subject" value={subject} />
+    <input type="hidden" name="from_name" value="Vida en Turra" />
     <div class="form-fields">
       {fields.map((field) => <FormField formId={id} field={field} />)}
     </div>
+    {accessKey.trim() && <div class="h-captcha" data-captcha="true" data-lang="es" data-size="compact" aria-label="Verificación antispam"></div>}
     <Button type="submit">{submitLabel} <span aria-hidden="true">↗</span></Button>
   </fieldset>
   <p id={`${id}-note`} class="form-note">{note}</p>
+  {!accessKey.trim() && <p class="form-note">El envío no está disponible en este momento.</p>}
+  <noscript><p class="form-note">Activa JavaScript para utilizar este formulario.</p></noscript>
   <p id={`${id}-status`} class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
 </form>
 
@@ -40,9 +48,10 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
   import type { FieldConfig } from "../forms/types";
 
   document.querySelectorAll<HTMLFormElement>("[data-validated-form]").forEach((form) => {
-    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input, textarea, select"));
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("[data-field-type]"));
     const status = form.querySelector<HTMLParagraphElement>(".form-status")!;
-
+    const fieldset = form.querySelector<HTMLFieldSetElement>("fieldset")!;
+    let sending = false;
     function validateField(field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
       const message = getFieldError({
         type: field.dataset.fieldType as FieldConfig["type"],
@@ -80,23 +89,61 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
       }
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (sending) return;
       status.textContent = "";
+      if (!form.dataset.accessKey) {
+        status.textContent = "El envío no está disponible en este momento.";
+        return;
+      }
       const invalidFields = fields.filter((field) => !validateField(field));
       if (invalidFields.length) {
         status.textContent = "Revisa los campos señalados antes de continuar.";
         invalidFields[0].focus();
         return;
       }
-      status.textContent = form.dataset.validMessage ?? "Los datos son válidos. El envío aún no está disponible.";
+      // Capture values before disabling the fieldset: disabled fields are omitted.
+      const data = Object.fromEntries(new FormData(form));
+      if (!data["h-captcha-response"]) {
+        status.textContent = "Completa la verificación antispam antes de enviar. Si no aparece, recarga la página.";
+        return;
+      }
+      sending = true;
+      fieldset.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      status.textContent = "Enviando…";
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(data),
+          signal: AbortSignal.timeout(15000),
+        });
+        const result = await response.json();
+        if (!response.ok || result?.success !== true) throw new Error("Submission rejected");
+        form.reset();
+        fields.forEach((field) => field.removeAttribute("aria-invalid"));
+        status.textContent = form.dataset.successMessage ?? "El formulario se ha enviado correctamente.";
+      } catch {
+        status.textContent = "No se ha podido confirmar el envío. Tus datos se conservan; puedes intentarlo de nuevo más tarde.";
+      } finally {
+        sending = false;
+        fieldset.disabled = false;
+        form.removeAttribute("aria-busy");
+        // Each current page has one form. A fresh captcha is required after sending.
+        (window as Window & { hcaptcha?: { reset(): void } }).hcaptcha?.reset();
+      }
     });
 
-    // Enable only after attaching the handler: this preview must never submit data.
+    // Enable only after attaching the handler and configuring an access key.
     form.noValidate = true;
-    form.querySelector("fieldset")!.disabled = false;
+    fieldset.disabled = !form.dataset.accessKey;
   });
+
 </script>
+
+{accessKey.trim() && <script is:inline src="https://web3forms.com/client/script.js" async defer></script>}
 
 <style>
   form {
@@ -124,6 +171,9 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
     color: var(--color-primary);
     font-size: 0.875rem;
     line-height: 1.6;
+  }
+  .h-captcha {
+    margin-bottom: 1.5rem;
   }
   .form-status:empty {
     margin: 0;
