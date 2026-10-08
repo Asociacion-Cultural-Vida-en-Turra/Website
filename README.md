@@ -80,6 +80,9 @@ import type { FormConfig } from "./types";
 export const activityForm = {
   legend: "Suggest an activity",
   submitLabel: "Send proposal",
+  accessKey: import.meta.env.PUBLIC_WEB3FORMS_CONTACT_KEY,
+  subject: "Vida en Turra · Activity proposal",
+  successMessage: "Tu propuesta se ha enviado correctamente.",
   fields: [
     {
       name: "name",
@@ -137,7 +140,21 @@ import { activityForm } from "../forms/activity";
 </Layout>
 ```
 
-Adjust the import path if the page is in a subfolder. You can include multiple forms on a page: each instance generates its own identifiers.
+### 3. Configure submission
+
+Forms send data directly from the browser to Web3Forms. An Web3Forms public access key can be added to the form using the `FormConfig.accessKey` attribute.
+
+For this website, contact and membership forms are configured to load the access keys configured using the following environment variables:
+
+```dotenv
+PUBLIC_WEB3FORMS_CONTACT_KEY=your-contact-form-key
+PUBLIC_WEB3FORMS_MEMBERSHIP_KEY=your-membership-form-key
+```
+Make sure to configure them using a `.env` file.
+
+Enable hCaptcha in each Web3Forms form's spam protection settings so that the
+service enforces verification. The component loads the captcha script when a
+key is configured; no additional captcha keys are needed.
 
 ### Form options
 
@@ -148,9 +165,11 @@ Actual default strings are shown in Spanish because that is the application's la
 | :--- | :--- | :--- | :--- | :--- |
 | `fields` | `FieldConfig[]` | Yes | — | Ordered list of fields to render and validate. |
 | `legend` | `string` | Yes | — | Accessible name for the group of fields. Visually hidden; add a visible heading on the page. |
-| `submitLabel` | `string` | No | `"Enviar"` | Text of the button that starts validation. |
-| `note` | `string` | No | `"Los campos indicados como opcionales pueden dejarse vacíos. El envío aún no está disponible."` | Visible notice below the button, associated with the form through `aria-describedby`. |
-| `validMessage` | `string` | No | `"Los datos son válidos. El envío aún no está disponible; no se ha enviado ningún dato."` | Message announced when all fields pass validation. Does not indicate an actual submission. |
+| `submitLabel` | `string` | No | `"Enviar"` | Text of the button that validates and submits the form. |
+| `note` | `string` | No | `"Los campos indicados como opcionales pueden dejarse vacíos."` | Visible notice below the button, associated with the form through `aria-describedby`. |
+| `accessKey` | `string` | No | `""` | Public Web3Forms access key. Leading and trailing whitespace is removed. An empty key disables the form. |
+| `subject` | `string` | No | Value of `legend` | Subject sent to Web3Forms through a hidden field. |
+| `successMessage` | `string` | No | `"El formulario se ha enviado correctamente."` | Message announced after Web3Forms confirms a successful submission. |
 | `id` | `string` | No | `form-` followed by a UUID | Form identifier and prefix for its field IDs. If specified, it must be unique on the page. Example: `<Form id="activity-form" {...activityForm} />`. |
 
 ### Field options
@@ -222,12 +241,6 @@ Example of dependent fields within `fields`:
 ```
 
 Changing the select revalidates the dependent field if it already contains a value or has been validated. Empty optional fields are accepted; populated optional fields must satisfy their validation rules.
-
-### Validation and submission
-
-Errors appear when leaving a field and update as they are corrected. Clicking the button validates all fields and moves focus to the first invalid field. Selects and checkboxes are also validated when they change.
-
-Currently, forms **only validate in the browser: they do not submit or store data, or collect payments**. They remain disabled until JavaScript initializes. Run `npm test` to check the validation rules.
 
 ## Deploying to GitHub Pages
 
