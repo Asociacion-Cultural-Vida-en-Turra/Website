@@ -142,7 +142,7 @@ import { activityForm } from "../forms/activity";
 
 ### 3. Configure submission
 
-Forms send data directly from the browser to Web3Forms. An Web3Forms public access key can be added to the form using the `FormConfig.accessKey` attribute.
+Forms send data directly from the browser to Web3Forms. A Web3Forms public access key can be added to the form using the `FormConfig.accessKey` attribute.
 
 For this website, contact and membership forms are configured to load the access keys configured using the following environment variables:
 
