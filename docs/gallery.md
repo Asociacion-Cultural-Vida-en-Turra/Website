@@ -3,8 +3,9 @@
 Each album is defined in a JSON file inside `src/content/gallery/`.
 Use lowercase filenames without spaces or accents, with words separated by hyphens:
 `rincones-del-pueblo.json` will have the identifier `rincones-del-pueblo`.
-On the planned detail page, its URL will be
-`/Website/galeria/rincones-del-pueblo/`.
+Albums appear on `/Website/galeria/`, each with a single preview image.
+Clicking an album opens its photos on the same page, in the order
+defined by `photos`.
 
 ## Example
 

@@ -1,0 +1,132 @@
+---
+import { Image, getImage } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  album: CollectionEntry<"gallery">;
+}
+
+const { album } = Astro.props;
+const { title, description, cover, coverAlt, photos } = album.data;
+const count = photos.length;
+const group = `gallery-${album.id}`;
+const slides = await Promise.all(photos.map(async (photo) => {
+  const [full, thumb] = await Promise.all([
+    getImage({ src: photo.image, width: Math.min(1920, photo.image.width), format: "webp" }),
+    getImage({ src: photo.image, width: Math.min(200, photo.image.width), format: "webp" }),
+  ]);
+  return { ...photo, src: full.src, thumb: thumb.src };
+}));
+// Fancybox renders captions as HTML; keep content authors' captions as plain text.
+const escapeCaption = (value: string) => value.replace(/[&<>"']/g, (character) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+}[character]!));
+const first = slides[0];
+---
+
+<article class="collection">
+  <Image
+    class="cover"
+    src={cover}
+    alt={coverAlt}
+    widths={[400, 800]}
+    sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw"
+    loading="lazy"
+  />
+  <p class="count">{count} {count === 1 ? "fotografía" : "fotografías"}</p>
+  <h2>{title}</h2>
+  <p class="description">{description}</p>
+  {first ? (
+    <a
+      class="open-gallery"
+      href={first.src}
+      data-fancybox={group}
+      data-caption={escapeCaption(first.caption ?? "")}
+      data-alt={first.alt}
+      data-thumb={first.thumb}
+      aria-label={`Ver colección: ${title}`}
+      aria-haspopup="dialog"
+    >
+      Ver colección <span aria-hidden="true">↗</span>
+    </a>
+  ) : (
+    <p class="empty">Esta colección todavía no tiene fotografías.</p>
+  )}
+  <div hidden>
+    {slides.slice(1).map((slide) => (
+      <a
+        href={slide.src}
+        data-fancybox={group}
+        data-caption={escapeCaption(slide.caption ?? "")}
+        data-alt={slide.alt}
+        data-thumb={slide.thumb}
+      >{slide.alt}</a>
+    ))}
+  </div>
+</article>
+
+<style>
+  .collection {
+    position: relative;
+    min-width: 0;
+  }
+  .cover {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 12 / 7;
+    object-fit: cover;
+  }
+  .count {
+    margin: 1.375rem 0 0.875rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+  }
+  h2 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    text-wrap: initial;
+  }
+  .description {
+    margin: 0.75rem 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .open-gallery, .empty {
+    display: block;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  .empty {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .open-gallery span {
+    margin-left: 0.25rem;
+  }
+  .open-gallery::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .open-gallery:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .open-gallery:focus-visible {
+    outline: none;
+  }
+  .open-gallery:focus-visible::after {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+</style>
