@@ -7,6 +7,7 @@ import Dropdown from "@components/Dropdown.astro";
 <nav class="navigation" aria-label="Main navigation">
   <a class="nav-link" href={import.meta.env.BASE_URL}>Inicio</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}blog/`}>El blog</a>
+  <a class="nav-link" href={`${import.meta.env.BASE_URL}galeria/`}>Galería</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}#asociacion`}>La asociación</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}#contacto`}>Contacto</a>
 
@@ -25,6 +26,7 @@ import Dropdown from "@components/Dropdown.astro";
       options={[
           { label: "Inicio", href: import.meta.env.BASE_URL },
           { label: "El blog", href: `${import.meta.env.BASE_URL}blog/` },
+          { label: "Galería", href: `${import.meta.env.BASE_URL}galeria/` },
           { label: "La asociación", href: `${import.meta.env.BASE_URL}#asociacion` },
           { label: "Contacto", href: `${import.meta.env.BASE_URL}#contacto` },
           { label: "Participa", href: `${import.meta.env.BASE_URL}participa/`, target: "_blank" },

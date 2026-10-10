@@ -1,0 +1,109 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import GalleryCard from "@components/GalleryCard.astro";
+
+const albums = (await getCollection("gallery")).sort(
+  (a, b) => a.data.title.localeCompare(b.data.title, "es") || a.id.localeCompare(b.id),
+);
+const description = "Recuerdos de Turra de Alba.";
+---
+
+<Layout title="Galería" description={description}>
+  <main class="gallery-index" aria-labelledby="gallery-title">
+    <header class="gallery-heading">
+      <p class="eyebrow">Nuestro pueblo en imágenes</p>
+      <h1 id="gallery-title">Galería</h1>
+      <p class="intro">{description}</p>
+    </header>
+    {albums.length > 0 ? (
+      <div class="collections">
+        {albums.map((album) => <GalleryCard album={album} />)}
+      </div>
+    ) : (
+      <p class="empty">Todavía no hay colecciones.</p>
+    )}
+  </main>
+</Layout>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+  import { es_ES } from "@fancyapps/ui/dist/fancybox/l10n/es_ES.js";
+  import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
+  // Fancybox carousel configuration
+  Fancybox.bind('.collections [data-fancybox]', {
+    l10n: es_ES,
+    Hash: false,
+    Carousel: {
+      Video: {
+        autoplay: false,
+      },
+      Toolbar: {
+        display: {
+          left: ["counter"],
+          middle: ["zoomIn", "zoomOut"],
+          right: ["thumbs", "close"],
+        },
+      },
+    },
+  });
+</script>
+
+<style>
+  .gallery-index {
+    box-sizing: border-box;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
+  }
+  .gallery-heading {
+    max-width: 48rem;
+    margin-bottom: 3rem;
+  }
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+  .intro {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  .collections {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 2.5rem 1.375rem;
+  }
+  .empty {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    padding-block: 2rem;
+  }
+  @media (min-width: 40rem) {
+    .collections {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .collections {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 75rem) {
+    .gallery-index {
+      max-width: 96rem;
+    }
+  }
+</style>
