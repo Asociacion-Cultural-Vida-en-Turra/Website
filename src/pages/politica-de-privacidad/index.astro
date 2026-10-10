@@ -18,7 +18,7 @@ const updatedAtLabel = new Intl.DateTimeFormat("es-ES", {
   <main class="privacy-page" aria-labelledby="privacy-policy-title">
     <div class="avg-document">
       <h1 id="privacy-policy-title">Política de privacidad de {entityName}</h1>
-      <p class="avg-doc-meta">Última actualización: <time datetime={updatedAt}>{updatedAtLabel}</time></p>
+      <p class="avg-doc-meta">Versión {PRIVACY_POLICY.version} · Última actualización: <time datetime={updatedAt}>{updatedAtLabel}</time></p>
       <p class="avg-doc-intro">Esta política de privacidad se aplica al uso de {entityName} ({websiteUrl}). Te informa sobre qué datos personales tratamos, con qué finalidad y sobre qué base jurídica, conforme al RGPD (Reglamento UE 2016/679) y la LOPDGDD. Esta política se actualizó por última vez en la fecha indicada al final del documento.</p>
       <hr class="avg-divider">
       <h2>1. Responsable del tratamiento y contacto</h2>

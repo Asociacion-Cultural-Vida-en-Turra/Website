@@ -1,0 +1,38 @@
+name: Privacy policy
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: privacy-policy-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  privacy-policy-version:
+    name: Privacy policy version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Check privacy policy version
+        env:
+          SKIP_LABEL: ${{ vars.PRIVACY_POLICY_SKIP_LABEL || 'privacy-policy-version-skip' }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        shell: bash
+        run: |
+          node scripts/check-privacy-policy-version.mjs \
+            --base "$BASE_SHA" \
+            --head "$HEAD_SHA" \
+            --config src/privacy-policy.json \
+            --page src/pages/politica-de-privacidad/index.astro \
+            --skip-label "$SKIP_LABEL" \
+            --labels "$LABELS" 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"

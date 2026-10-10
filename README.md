@@ -31,6 +31,10 @@ Run the following commands from the project's root folder:
 - [Gallery](docs/gallery.md)
 - [Blog](docs/blog.md)
 
+## Privacy policy
+
+For changes to the privacy policy, see [Privacy policy versioning](docs/privacy-policy.md).
+
 ## Creating forms
 
 Forms are defined through configuration without modifying their components:
