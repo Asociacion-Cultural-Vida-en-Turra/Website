@@ -34,7 +34,7 @@ const slides = await Promise.all(items.map(async (item) => {
 // Fancybox renders captions as HTML; keep content authors' captions as plain text.
 const escapeCaption = (value: string) => value.replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-}[character]!));
+}[character as "&" | "<" | ">" | '"' | "'"]!));
 const first = slides[0];
 ---
 
