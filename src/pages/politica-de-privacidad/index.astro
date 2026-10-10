@@ -1,0 +1,135 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { PRIVACY_POLICY } from "../../consts";
+
+const { entityName, contactEmail, websiteUrl, hostingProvider, updatedAt, supervisoryAuthority } = PRIVACY_POLICY;
+const updatedAtLabel = new Intl.DateTimeFormat("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${updatedAt}T00:00:00Z`));
+---
+
+<Layout
+  title="Política de privacidad"
+  description={`Política de privacidad de la ${PRIVACY_POLICY.entityName}.`}
+>
+  <main class="privacy-page" aria-labelledby="privacy-policy-title">
+    <div class="avg-document">
+      <h1 id="privacy-policy-title">Política de privacidad de {entityName}</h1>
+      <p class="avg-doc-meta">Última actualización: <time datetime={updatedAt}>{updatedAtLabel}</time></p>
+      <p class="avg-doc-intro">Esta política de privacidad se aplica al uso de {entityName} ({websiteUrl}). Te informa sobre qué datos personales tratamos, con qué finalidad y sobre qué base jurídica, conforme al RGPD (Reglamento UE 2016/679) y la LOPDGDD. Esta política se actualizó por última vez en la fecha indicada al final del documento.</p>
+      <hr class="avg-divider">
+      <h2>1. Responsable del tratamiento y contacto</h2>
+      <div class="avg-section-body">
+        <p>1. El responsable del tratamiento a los efectos del Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD) es {entityName}, con correo electrónico de contacto {contactEmail}, para el sitio web {websiteUrl}.</p>
+        <p>2. Si tienes cualquier duda sobre esta política de privacidad o sobre el tratamiento de tus datos, puedes dirigirte en cualquier momento a la dirección de contacto indicada.</p>
+      </div>
+      <h2>2. Principios generales del tratamiento</h2>
+      <div class="avg-section-body">
+        <p>1. Tratamos los datos personales de nuestros usuarios únicamente en la medida en que sea necesario para ofrecer un sitio web funcional, así como nuestros contenidos y servicios.</p>
+        <p>2. El tratamiento de datos personales de nuestros usuarios se realiza, con carácter general, únicamente previo consentimiento del usuario o sobre otra base jurídica legalmente admitida conforme al artículo 6 del RGPD.</p>
+      </div>
+      <h2>3. Alojamiento (hosting)</h2>
+      <div class="avg-section-body">
+        <p>1. Este sitio web está alojado en los servidores de {hostingProvider}. Los datos personales recogidos en este sitio se almacenan en los servidores de dicho proveedor.</p>
+        <p>2. Con el proveedor de hosting existe un contrato de encargado del tratamiento conforme al artículo 28 del RGPD.</p>
+      </div>
+      <h2>4. Archivos de registro del servidor</h2>
+      <div class="avg-section-body">
+        <p>1. El proveedor de {websiteUrl} recoge y almacena automáticamente información en los llamados archivos de registro del servidor, que tu navegador nos transmite automáticamente.</p>
+        <p>2. Estos son: tipo de navegador, sistema operativo utilizado, URL de referencia, nombre de host del equipo de acceso, hora de la solicitud al servidor y dirección IP. No se realiza una combinación de estos datos con otras fuentes de datos.</p>
+      </div>
+      <h2>5. Formulario de contacto</h2>
+      <div class="avg-section-body">
+        <p>1. Si nos envías consultas a través del formulario de contacto, tus datos, incluidos los datos de contacto que facilites en dicho formulario, se almacenan para gestionar tu consulta.</p>
+        <p>2. La base jurídica es el artículo 6.1.b RGPD, si la solicitud tiene por objeto la preparación de un contrato, o en caso contrario nuestro interés legítimo en responder a las consultas recibidas (artículo 6.1.f RGPD).</p>
+      </div>
+      <h2>6. Cookies y tecnologías de seguimiento</h2>
+      <div class="avg-section-body">
+        <p>1. Nuestro sitio web utiliza cookies. Las cookies técnicamente necesarias se instalan sin necesidad de consentimiento previo, conforme al artículo 22 de la LSSI-CE.</p>
+        <p>2. Para el resto de cookies, por ejemplo con fines de análisis o marketing, solicitamos previamente tu consentimiento mediante un banner de cookies conforme al artículo 6.1.a RGPD. Puedes modificar tu elección en cualquier momento desde la configuración de cookies.</p>
+      </div>
+      <h2>7. Derechos de los interesados</h2>
+      <div class="avg-section-body">
+        <p>1. Dentro del marco de la normativa vigente, tienes derecho en todo momento a obtener información gratuita sobre tus datos personales almacenados, su origen, sus destinatarios y la finalidad del tratamiento.</p>
+        <p>2. Además, tienes derecho a la rectificación, supresión, limitación del tratamiento y portabilidad de estos datos, así como derecho de oposición al tratamiento.</p>
+      </div>
+      <h2>8. Derecho de reclamación ante la autoridad de control</h2>
+      <div class="avg-section-body">
+        <p>1. En caso de infracción del RGPD, tienes derecho como interesado a presentar una reclamación ante una autoridad de control, en particular en el Estado miembro de tu residencia habitual, tu lugar de trabajo o el lugar de la supuesta infracción.</p>
+        <p>2. En {supervisoryAuthority.country}, la autoridad de control competente es la {supervisoryAuthority.name} ({supervisoryAuthority.abbreviation}), con sede en {supervisoryAuthority.city}.</p>
+      </div>
+      <h2>9. Conservación de los datos</h2>
+      <div class="avg-section-body">
+        <p>1. Conservamos tus datos personales únicamente durante el tiempo necesario para cumplir la finalidad para la que fueron recogidos, salvo que exista una obligación legal de conservación más prolongada.</p>
+        <p>2. Transcurridos dichos plazos, tus datos se suprimen o se anonimizan de forma segura.</p>
+      </div>
+      <h2>10. Cambios en esta política de privacidad</h2>
+      <div class="avg-section-body">
+        <p>1. Nos reservamos el derecho a adaptar esta política de privacidad para que cumpla siempre con los requisitos legales vigentes o para reflejar cambios en nuestros servicios.</p>
+        <p>2. En tu próxima visita a {websiteUrl} se aplicará la nueva política de privacidad. La fecha de la última actualización aparece al final de esta página.</p>
+      </div>
+      <hr class="avg-divider">
+      <p class="avg-doc-outro">¿Tienes dudas sobre esta política de privacidad? Escríbenos a {contactEmail}.</p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .privacy-page {
+    box-sizing: border-box;
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 3rem);
+  }
+.avg-document {
+    color: var(--color-text);
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+  }
+  h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  h2 {
+    margin: 2.5rem 0 1rem;
+    color: var(--color-primary);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.35;
+  }
+  p {
+    margin: 0 0 1rem;
+  }
+  .avg-doc-meta {
+    margin: 1.25rem 0 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.875rem;
+  }
+  .avg-doc-intro {
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+  }
+  .avg-divider {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .avg-doc-outro {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 0.2em;
+  }
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+  a:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 4px;
+  }
+</style>
