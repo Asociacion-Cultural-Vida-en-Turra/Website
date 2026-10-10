@@ -6,7 +6,7 @@ import GalleryCard from "@components/GalleryCard.astro";
 const albums = (await getCollection("gallery")).sort(
   (a, b) => a.data.title.localeCompare(b.data.title, "es") || a.id.localeCompare(b.id),
 );
-const description = "Fotografías, encuentros y recuerdos de Turra de Alba.";
+const description = "Recuerdos de Turra de Alba.";
 ---
 
 <Layout title="Galería" description={description}>
@@ -21,7 +21,7 @@ const description = "Fotografías, encuentros y recuerdos de Turra de Alba.";
         {albums.map((album) => <GalleryCard album={album} />)}
       </div>
     ) : (
-      <p class="empty">Todavía no hay colecciones de fotos.</p>
+      <p class="empty">Todavía no hay colecciones.</p>
     )}
   </main>
 </Layout>
@@ -36,6 +36,9 @@ const description = "Fotografías, encuentros y recuerdos de Turra de Alba.";
     l10n: es_ES,
     Hash: false,
     Carousel: {
+      Video: {
+        autoplay: false,
+      },
       Toolbar: {
         display: {
           left: ["counter"],

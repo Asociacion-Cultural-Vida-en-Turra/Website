@@ -7,15 +7,29 @@ interface Props {
 }
 
 const { album } = Astro.props;
-const { title, description, cover, coverAlt, photos } = album.data;
-const count = photos.length;
+const { title, description, cover, coverAlt, items } = album.data;
+const photoCount = items.filter((item) => item.type === "image").length;
+const videoCount = items.filter((item) => item.type === "video").length;
+const countLabel = [
+  photoCount > 0 ? `${photoCount} ${photoCount === 1 ? "foto" : "fotos"}` : "",
+  videoCount > 0 ? `${videoCount} ${videoCount === 1 ? "vídeo" : "vídeos"}` : "",
+].filter(Boolean).join(" · ") || "0 elementos";
 const group = `gallery-${album.id}`;
-const slides = await Promise.all(photos.map(async (photo) => {
+const slides = await Promise.all(items.map(async (item) => {
+  const image = item.type === "image" ? item.image : item.poster ?? cover;
   const [full, thumb] = await Promise.all([
-    getImage({ src: photo.image, width: Math.min(1920, photo.image.width), format: "webp" }),
-    getImage({ src: photo.image, width: Math.min(200, photo.image.width), format: "webp" }),
+    getImage({ src: image, width: Math.min(1920, image.width), format: "webp" }),
+    getImage({ src: image, width: Math.min(200, image.width), format: "webp" }),
   ]);
-  return { ...photo, src: full.src, thumb: thumb.src };
+  const isFile = item.type === "video" && /\.(mp4|webm|ogv)(?:[?#]|$)/i.test(item.src);
+  return {
+    src: item.type === "image" ? full.src : item.src.startsWith("videos/") ? `${import.meta.env.BASE_URL}${item.src}` : item.src,
+    alt: item.type === "image" ? item.alt : item.title,
+    caption: item.caption,
+    thumb: thumb.src,
+    poster: item.type === "video" ? full.src : undefined,
+    fancyboxType: item.type === "image" ? "image" : isFile ? "html5video" : undefined,
+  };
 }));
 // Fancybox renders captions as HTML; keep content authors' captions as plain text.
 const escapeCaption = (value: string) => value.replace(/[&<>"']/g, (character) => ({
@@ -33,7 +47,7 @@ const first = slides[0];
     sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw"
     loading="lazy"
   />
-  <p class="count">{count} {count === 1 ? "fotografía" : "fotografías"}</p>
+  <p class="count">{countLabel}</p>
   <h2>{title}</h2>
   <p class="description">{description}</p>
   {first ? (
@@ -44,13 +58,15 @@ const first = slides[0];
       data-caption={escapeCaption(first.caption ?? "")}
       data-alt={first.alt}
       data-thumb={first.thumb}
+      data-type={first.fancyboxType}
+      data-poster={first.poster}
       aria-label={`Ver colección: ${title}`}
       aria-haspopup="dialog"
     >
       Ver colección <span aria-hidden="true">↗</span>
     </a>
   ) : (
-    <p class="empty">Esta colección todavía no tiene fotografías.</p>
+    <p class="empty">Esta colección todavía no tiene fotos ni vídeos.</p>
   )}
   <div hidden>
     {slides.slice(1).map((slide) => (
@@ -60,6 +76,8 @@ const first = slides[0];
         data-caption={escapeCaption(slide.caption ?? "")}
         data-alt={slide.alt}
         data-thumb={slide.thumb}
+        data-type={slide.fancyboxType}
+        data-poster={slide.poster}
       >{slide.alt}</a>
     ))}
   </div>
