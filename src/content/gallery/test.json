@@ -1,0 +1,18 @@
+{
+  "title": "Colección de prueba",
+  "description": "Un álbum de ejemplo con la iglesia de Turra de Alba para probar la galería.",
+  "cover": "../../assets/fotoIglesia.jpg",
+  "coverAlt": "Vista de la iglesia de Turra de Alba",
+  "photos": [
+    {
+      "image": "../../assets/fotoIglesia.jpg",
+      "alt": "Vista de la iglesia de Turra de Alba",
+      "caption": "La iglesia de Turra de Alba."
+    },
+    {
+      "image": "../../assets/fotoIglesia.jpg",
+      "alt": "Vista de la iglesia de Turra de Alba",
+      "caption": "Aquí va otra fotografía."
+    }
+  ]
+}
