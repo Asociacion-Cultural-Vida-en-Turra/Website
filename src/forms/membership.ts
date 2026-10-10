@@ -89,6 +89,10 @@ export const membershipForm = {
       name: "privacy",
       type: "checkbox",
       label: "He leído y acepto la política de privacidad.",
+      helpLink: {
+        href: `${import.meta.env.BASE_URL}politica-de-privacidad/`,
+        label: "Consultar la política de privacidad",
+      },
       required: true,
       requiredMessage: "Debes aceptar la política de privacidad.",
       fullWidth: true,
