@@ -9,8 +9,7 @@ defined by `photos`.
 
 ## Example
 
-This example uses an existing photograph. It does not create an album by itself:
-save it as `src/content/gallery/rincones-del-pueblo.json` to add it.
+A json file example is shown bellow:
 
 ```json
 {
@@ -27,6 +26,8 @@ save it as `src/content/gallery/rincones-del-pueblo.json` to add it.
   ]
 }
 ```
+
+Add it to src/content/gallery to add a new collection.
 
 ## Fields
 
