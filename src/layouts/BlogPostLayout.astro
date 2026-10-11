@@ -22,10 +22,10 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
     <div class="reading-column back-link">
       <a href={`${import.meta.env.BASE_URL}blog/`}><span aria-hidden="true">←</span> Volver a las publicaciones</a>
     </div>
-    <article aria-labelledby="post-title">
+    <article aria-labelledby="post-title" data-pagefind-body data-pagefind-filter="collection:blog">
       <header class="reading-column post-heading">
         <p class="meta">{category} <span aria-hidden="true">·</span> <time datetime={date}>{dateLabel}</time></p>
-        <h1 id="post-title">{title}</h1>
+        <h1 id="post-title" data-pagefind-meta="title">{title}</h1>
         <p class="intro">{description}</p>
       </header>
       {image && (
@@ -40,7 +40,7 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
       <div class="reading-column prose">
         <slot />
       </div>
-      <footer class="reading-column post-footer">
+      <footer class="reading-column post-footer" data-pagefind-ignore>
         <a href={`${import.meta.env.BASE_URL}blog/`}><span aria-hidden="true">←</span> Volver a las publicaciones</a>
       </footer>
     </article>

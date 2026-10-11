@@ -13,16 +13,18 @@ const description = "Recuerdos de Turra de Alba.";
   <main class="gallery-index" aria-labelledby="gallery-title">
     <header class="gallery-heading">
       <p class="eyebrow">Nuestro pueblo en imágenes</p>
-      <h1 id="gallery-title">Galería</h1>
+      <h1 id="gallery-title" data-pagefind-meta="title">Galería</h1>
       <p class="intro">{description}</p>
     </header>
-    {albums.length > 0 ? (
-      <div class="collections">
-        {albums.map((album) => <GalleryCard album={album} />)}
-      </div>
-    ) : (
-      <p class="empty">Todavía no hay colecciones.</p>
-    )}
+    <div data-pagefind-body data-pagefind-filter="collection:gallery">
+      {albums.length > 0 ? (
+        <div class="collections">
+          {albums.map((album) => <GalleryCard album={album} />)}
+        </div>
+      ) : (
+        <p class="empty" data-pagefind-ignore>Todavía no hay colecciones.</p>
+      )}
+    </div>
   </main>
 </Layout>
 
