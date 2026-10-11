@@ -21,6 +21,9 @@ const hasHeading = Astro.slots.has("heading");
       show-sub-results={collection === "gallery"}
       hide-shortcut
     ></pagefind-searchbox>
+    <p class="search-error" role="alert" hidden>
+      No se ha podido cargar la búsqueda. <a href={Astro.url.pathname}>Intentar de nuevo</a>.
+    </p>
   </div>
   <noscript>
     Activa JavaScript para usar la búsqueda. Puedes consultar las publicaciones y colecciones en el listado.
@@ -32,9 +35,24 @@ const hasHeading = Astro.slots.has("heading");
 
   // https://pagefind.app/docs/custom-components/#triggering-searches
   class CollectionSearch extends HTMLElement {
+    private errorController?: AbortController;
+
     connectedCallback() {
       const collection = this.dataset.collection;
       if (!this.id || (collection !== "blog" && collection !== "gallery")) return;
+
+      this.errorController?.abort();
+      this.errorController = new AbortController();
+      this.addEventListener("pagefind-error", () => {
+        const searchbox = this.querySelector("pagefind-searchbox");
+        const message = this.querySelector<HTMLElement>(".search-error");
+        const hadFocus = searchbox?.contains(document.activeElement);
+        if (searchbox) searchbox.hidden = true;
+        if (message) {
+          message.hidden = false;
+          if (hadFocus) message.querySelector("a")?.focus();
+        }
+      }, { signal: this.errorController.signal });
 
       const instance = getInstanceManager().getInstance(this.id);
       instance.setTranslations({
@@ -44,6 +62,10 @@ const hasHeading = Astro.slots.has("heading");
       customElements.whenDefined("pagefind-searchbox").then(() => {
         this.querySelector("input")?.setAttribute("aria-label", instance.translate("search_label"));
       });
+    }
+
+    disconnectedCallback() {
+      this.errorController?.abort();
     }
   }
 
@@ -68,6 +90,9 @@ const hasHeading = Astro.slots.has("heading");
   }
   .search-heading {
     margin-bottom: 1rem;
+  }
+  pagefind-searchbox[hidden] {
+    display: none;
   }
   .with-heading {
     display: grid;
