@@ -2,12 +2,19 @@ name: PR Agent
 
 on:
   issue_comment:
+  # Apply this label to test the workflow from the PR branch before merging.
+  pull_request:
+    types: [labeled]
 
 jobs:
   pr_agent_job:
-    if: ${{ github.event.sender.type != 'Bot' }}
+    if: >-
+      github.event.sender.type != 'Bot' &&
+      (github.event_name == 'issue_comment' ||
+      (github.event.label.name == 'pr-agent-test' &&
+      github.event.pull_request.head.repo.full_name == github.repository))
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     permissions:
       contents: read
       issues: write
@@ -28,9 +35,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           config.model: "gemini/gemini-3.8-flash"
-          config.fallback_models: "[]"
+          config.fallback_models: '["gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"]'
           config.ai_timeout: "300"
-          github_action_config.auto_review: "false"
+          config.retry_same_model_on_timeout: "false"
+          config.num_retries: "0"
+          github_action_config.pr_actions: '["labeled"]'
+          github_action_config.auto_review: ${{ github.event_name == 'pull_request' && 'true' || 'false' }}
           github_action_config.auto_describe: "false"
           github_action_config.auto_improve: "false"
           github_action_config.handle_push_trigger: "false"
