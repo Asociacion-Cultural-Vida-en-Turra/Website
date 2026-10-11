@@ -1,4 +1,5 @@
 import { defineConfig, fontProviders } from "astro/config"
+import pagefind from "astro-pagefind"
 
 export default defineConfig({
   site: "https://asociacion-cultural-vida-en-turra.github.io",
@@ -29,5 +30,8 @@ export default defineConfig({
       styles: ["normal"],
       fallbacks: ["Arial", "sans-serif"]
     }
-  ]
+  ],
+  integrations: [
+    pagefind()
+  ],
 })
