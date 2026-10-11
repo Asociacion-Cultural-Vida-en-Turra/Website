@@ -31,6 +31,11 @@
   --font-bold: 900;
 }
 
+/* Leave some space at the top of the page for the header */
+html {
+  scroll-padding-top: 10rem;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -29,12 +29,12 @@ const {
         <Font cssVariable="--font-body"/>
     </head>
     <body>
-        {Astro.slots.has("hero") ? (
+        <Header showNavigation={showNavigation} />
+        {Astro.slots.has("hero") && (
             <div class="page-intro">
-                <Header showNavigation={showNavigation} />
                 <slot name="hero" />
             </div>
-        ) : <Header showNavigation={showNavigation} />}
+        )}
         <slot/>
         <Footer />
     </body>
@@ -44,8 +44,7 @@ const {
     @media (min-width: 48rem) {
         .page-intro {
             display: grid;
-            grid-template-rows: auto 1fr;
-            min-height: 100svh;
+            min-height: 80svh;
         }
     }
 </style>

@@ -17,6 +17,10 @@ const { showNavigation = true } = Astro.props;
 
 <style>
     header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--color-background);
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
