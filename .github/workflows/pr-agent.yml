@@ -1,4 +1,4 @@
-name: PR Agent (Gemini)
+name: PR Agent
 
 on:
   issue_comment:
