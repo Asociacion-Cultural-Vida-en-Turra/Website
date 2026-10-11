@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "entityName": "Asociación Cultural y Medioambiental Vida en Turra",
+  "contactEmail": "test@example.com",
+  "websiteUrl": "https://asociacion-cultural-vida-en-turra.github.io/Website/",
+  "hostingProvider": "Github Pages",
+  "updatedAt": "2026-10-10",
+  "supervisoryAuthority": {
+    "country": "España",
+    "name": "Agencia Española de Protección de Datos",
+    "abbreviation": "AEPD",
+    "city": "Madrid"
+  }
+}

@@ -13,7 +13,7 @@ const attributes = {
   id,
   name: field.name,
   required: field.required,
-  "aria-describedby": field.helpText ? `${id}-help ${id}-error` : `${id}-error`,
+  "aria-describedby": field.helpText || field.helpLink ? `${id}-help ${id}-error` : `${id}-error`,
   "data-required-message": field.requiredMessage,
   "data-field-type": field.type,
   "data-validation": field.validation,
@@ -42,7 +42,16 @@ const attributes = {
       )}
     </>
   )}
-  {field.helpText && <p id={`${id}-help`} class="help">{field.helpText}</p>}
+  {(field.helpText || field.helpLink) && (
+    <p id={`${id}-help`} class="help">
+      {field.helpText}
+      {field.helpLink && (
+        <a href={field.helpLink.href} target="_blank" rel="noopener noreferrer">
+          {field.helpLink.label} (se abre en una pestaña nueva)
+        </a>
+      )}
+    </p>
+  )}
   <p id={`${id}-error`} class="error" hidden></p>
 </div>
 
@@ -110,6 +119,14 @@ const attributes = {
     color: var(--color-text-muted);
     font-size: 0.8125rem;
     line-height: 1.5;
+  }
+  .help a {
+    color: var(--color-primary);
+    text-underline-offset: 0.2em;
+  }
+  .help a:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
   }
   @media (min-width: 48rem) {
     .full-width {

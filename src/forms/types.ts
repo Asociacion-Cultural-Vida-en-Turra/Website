@@ -9,6 +9,7 @@ export interface FieldConfig {
   /** Name of the select that determines the document validation. */
   validationField?: string;
   helpText?: string;
+  helpLink?: { href: string; label: string };
   placeholder?: string;
   autocomplete?: string;
   maxLength?: number;

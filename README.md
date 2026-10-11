@@ -31,6 +31,10 @@ Run the following commands from the project's root folder:
 - [Gallery](docs/gallery.md)
 - [Blog](docs/blog.md)
 
+## Privacy policy
+
+For changes to the privacy policy, see [Privacy policy versioning](docs/privacy-policy.md).
+
 ## Creating forms
 
 Forms are defined through configuration without modifying their components:
@@ -154,6 +158,9 @@ Actual default strings are shown in Spanish because that is the application's la
 | `validation` | `string` | No | No additional rule | Document rule: `dni`, `nie`, `passport` or `document`. Used with text fields; each value is described below. |
 | `validationField` | `string` | No; needed with `validation: "document"` | No dependency | `name` of the select in the same form that determines the document type. Its values must be `dni`, `nie` or `passport`. |
 | `helpText` | `string` | No | No text | Visible instructions below the control, associated with it for screen readers. |
+| `helpLink` | `{ href: string; label: string }` | No | No link | Help link below the control, associated with it for screen readers. Opens in a new tab and can be used with or without `helpText`. |
+| `helpLink.href` | `string` | Yes, when `helpLink` is provided | — | Link destination. Use `import.meta.env.BASE_URL` for internal links. |
+| `helpLink.label` | `string` | Yes, when `helpLink` is provided | — | Visible link text. The component appends “(se abre en una pestaña nueva)”. |
 | `placeholder` | `string` | No | No text; for `select`, `"Selecciona una opción"` | Hint for text inputs and textareas. For a select, this is the initial empty option. Does not apply to checkboxes. |
 | `autocomplete` | `string` | No | No explicit attribute | Autofill hint for `text`, `email` and `tel` controls. Examples: `name`, `given-name`, `family-name`, `email`, `tel`. |
 | `maxLength` | `number` | No | No configured limit | Maximum character count for `text`, `email`, `tel` and `textarea`. Does not apply to selects or checkboxes. Use a non-negative integer. Document rules may impose additional limits. |
