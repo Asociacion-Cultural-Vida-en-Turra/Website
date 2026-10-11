@@ -1,15 +1,18 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import BlogGrid from "@components/BlogGrid.astro";
+import SearchBar from "@components/SearchBar.astro";
 ---
 
 <Layout title="Todas las publicaciones" description="Noticias, actividades e historias de la asociación y de Turra de Alba.">
   <main class="blog-index" aria-labelledby="blog-title">
-    <header class="blog-heading">
-      <p class="eyebrow">El día a día</p>
-      <h1 id="blog-title">Todas las publicaciones</h1>
-      <p class="intro">Noticias, encuentros e historias de nuestro pueblo. Nuestro tablón, siempre abierto.</p>
-    </header>
+    <SearchBar id="blog-search" collection="blog" placeholder="Buscar publicaciones…">
+      <header slot="heading" class="blog-heading">
+        <p class="eyebrow">El día a día</p>
+        <h1 id="blog-title">Todas las publicaciones</h1>
+        <p class="intro">Noticias, encuentros e historias de nuestro pueblo. Nuestro tablón, siempre abierto.</p>
+      </header>
+    </SearchBar>
     <BlogGrid id="all-blog" headingLevel="h2" />
   </main>
 </Layout>
@@ -23,7 +26,6 @@ import BlogGrid from "@components/BlogGrid.astro";
   }
   .blog-heading {
     max-width: 48rem;
-    margin-bottom: 3rem;
   }
   .eyebrow {
     margin: 0 0 1rem;

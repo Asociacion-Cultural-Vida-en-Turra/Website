@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import GalleryCard from "@components/GalleryCard.astro";
+import SearchBar from "@components/SearchBar.astro";
 
 const albums = (await getCollection("gallery")).sort(
   (a, b) => a.data.title.localeCompare(b.data.title, "es") || a.id.localeCompare(b.id),
@@ -11,18 +12,22 @@ const description = "Recuerdos de Turra de Alba.";
 
 <Layout title="Galería" description={description}>
   <main class="gallery-index" aria-labelledby="gallery-title">
-    <header class="gallery-heading">
-      <p class="eyebrow">Nuestro pueblo en imágenes</p>
-      <h1 id="gallery-title">Galería</h1>
-      <p class="intro">{description}</p>
-    </header>
-    {albums.length > 0 ? (
-      <div class="collections">
-        {albums.map((album) => <GalleryCard album={album} />)}
-      </div>
-    ) : (
-      <p class="empty">Todavía no hay colecciones.</p>
-    )}
+    <SearchBar id="gallery-search" collection="gallery" placeholder="Buscar colecciones…">
+      <header slot="heading" class="gallery-heading">
+        <p class="eyebrow">Nuestro pueblo en imágenes</p>
+        <h1 id="gallery-title" data-pagefind-meta="title">Galería</h1>
+        <p class="intro">{description}</p>
+      </header>
+    </SearchBar>
+    <div data-pagefind-body data-pagefind-filter="collection:gallery">
+      {albums.length > 0 ? (
+        <div class="collections">
+          {albums.map((album) => <GalleryCard album={album} />)}
+        </div>
+      ) : (
+        <p class="empty" data-pagefind-ignore>Todavía no hay colecciones.</p>
+      )}
+    </div>
   </main>
 </Layout>
 
@@ -59,7 +64,6 @@ const description = "Recuerdos de Turra de Alba.";
   }
   .gallery-heading {
     max-width: 48rem;
-    margin-bottom: 3rem;
   }
   .eyebrow {
     margin: 0 0 1rem;

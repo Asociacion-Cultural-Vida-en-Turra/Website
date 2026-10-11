@@ -1,0 +1,117 @@
+---
+import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
+
+interface Props {
+  id: string;
+  collection: "blog" | "gallery";
+  placeholder: string;
+}
+
+const { id, collection, placeholder } = Astro.props;
+const hasHeading = Astro.slots.has("heading");
+---
+
+<collection-search id={id} data-collection={collection} data-pagefind-ignore>
+  <PagefindConfig instance={id} base-url={import.meta.env.BASE_URL} lang="es" />
+  <div class:list={["search-heading", { "with-heading": hasHeading }]}>
+    <slot name="heading" />
+    <pagefind-searchbox
+      instance={id}
+      placeholder={placeholder}
+      show-sub-results={collection === "gallery"}
+      hide-shortcut
+    ></pagefind-searchbox>
+    <p class="search-error" role="alert" hidden>
+      No se ha podido cargar la búsqueda. <a href={Astro.url.pathname}>Intentar de nuevo</a>.
+    </p>
+  </div>
+  <noscript>
+    Activa JavaScript para usar la búsqueda. Puedes consultar las publicaciones y colecciones en el listado.
+  </noscript>
+</collection-search>
+
+<script>
+  import { getInstanceManager } from "@pagefind/component-ui";
+
+  // https://pagefind.app/docs/custom-components/#triggering-searches
+  class CollectionSearch extends HTMLElement {
+    private errorController?: AbortController;
+
+    connectedCallback() {
+      const collection = this.dataset.collection;
+      if (!this.id || (collection !== "blog" && collection !== "gallery")) return;
+
+      this.errorController?.abort();
+      this.errorController = new AbortController();
+      this.addEventListener("pagefind-error", () => {
+        const searchbox = this.querySelector("pagefind-searchbox");
+        const message = this.querySelector<HTMLElement>(".search-error");
+        const hadFocus = searchbox?.contains(document.activeElement);
+        if (searchbox) searchbox.hidden = true;
+        if (message) {
+          message.hidden = false;
+          if (hadFocus) message.querySelector("a")?.focus();
+        }
+      }, { signal: this.errorController.signal });
+
+      const instance = getInstanceManager().getInstance(this.id);
+      instance.setTranslations({
+        search_label: collection === "blog" ? "Buscar publicaciones" : "Buscar colecciones",
+      });
+      instance.triggerFilter("collection", [collection]);
+      customElements.whenDefined("pagefind-searchbox").then(() => {
+        this.querySelector("input")?.setAttribute("aria-label", instance.translate("search_label"));
+      });
+    }
+
+    disconnectedCallback() {
+      this.errorController?.abort();
+    }
+  }
+
+  if (!customElements.get("collection-search")) {
+    customElements.define("collection-search", CollectionSearch);
+  }
+</script>
+
+<style>
+  collection-search {
+    --pf-border: var(--color-border);
+    --pf-border-focus: var(--color-primary);
+    --pf-outline-focus: var(--color-focus-ring);
+    --pf-background: var(--color-background);
+    --pf-text: var(--color-text);
+    --pf-text-muted: var(--color-text-muted);
+    --pf-hover: var(--color-surface-muted);
+    --pf-searchbox-dropdown-max-height: 20rem;
+    --pf-input-height: 3rem;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .search-heading {
+    margin-bottom: 1rem;
+  }
+  pagefind-searchbox[hidden] {
+    display: none;
+  }
+  .with-heading {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .with-heading pagefind-searchbox {
+    width: 100%;
+    max-width: 22rem;
+    justify-self: end;
+    min-width: 0;
+  }
+  @media (min-width: 64rem) {
+    .with-heading {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .with-heading pagefind-searchbox {
+      margin-top: 2rem;
+    }
+  }
+</style>

@@ -47,9 +47,17 @@ const first = slides[0];
     sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw"
     loading="lazy"
   />
-  <p class="count">{countLabel}</p>
-  <h2>{title}</h2>
+  <p class="count" data-pagefind-ignore>{countLabel}</p>
+  <h2 id={`album-${album.id}`}>{title}</h2>
   <p class="description">{description}</p>
+  <div hidden aria-hidden="true">
+    {items.map((item) => (
+      <p>
+        {item.type === "video" && item.title}
+        {item.caption}
+      </p>
+    ))}
+  </div>
   {first ? (
     <a
       class="open-gallery"
@@ -62,13 +70,14 @@ const first = slides[0];
       data-poster={first.poster}
       aria-label={`Ver colección: ${title}`}
       aria-haspopup="dialog"
+      data-pagefind-ignore
     >
       Ver colección <span aria-hidden="true">↗</span>
     </a>
   ) : (
-    <p class="empty">Esta colección todavía no tiene fotos ni vídeos.</p>
+    <p class="empty" data-pagefind-ignore>Esta colección todavía no tiene fotos ni vídeos.</p>
   )}
-  <div hidden>
+  <div hidden data-pagefind-ignore>
     {slides.slice(1).map((slide) => (
       <a
         href={slide.src}
@@ -103,6 +112,7 @@ const first = slides[0];
     font-weight: var(--font-semibold);
   }
   h2 {
+    scroll-margin-top: 10rem;
     margin: 0;
     color: var(--color-primary);
     font-size: 1.5rem;
