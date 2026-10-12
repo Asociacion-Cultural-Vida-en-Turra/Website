@@ -5,9 +5,10 @@ import Layout from "@layouts/Layout.astro";
 
 interface Props {
   post: CollectionEntry<"blog">["data"];
+  author?: CollectionEntry<"authors">["data"];
 }
 
-const { post } = Astro.props;
+const { post, author } = Astro.props;
 const { title, description, category, date, image, imageAlt } = post;
 const dateLabel = new Intl.DateTimeFormat("es-ES", {
   day: "numeric",
@@ -27,6 +28,15 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
         <p class="meta">{category} <span aria-hidden="true">·</span> <time datetime={date}>{dateLabel}</time></p>
         <h1 id="post-title" data-pagefind-meta="title">{title}</h1>
         <p class="intro">{description}</p>
+        {author && (
+          <div class="author">
+            {author.image && <Image class="author-image" src={author.image} alt={author.imageAlt} widths={[96, 192]} sizes="3rem" />}
+            <div>
+              <p class="author-name">Por {author.name}</p>
+              {author.bio && <p class="author-bio">{author.bio}</p>}
+            </div>
+          </div>
+        )}
       </header>
       {image && (
         <Image
@@ -102,6 +112,31 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
   }
   .post-heading {
     margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-top: 1.5rem;
+  }
+  .author-image {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .author-name,
+  .author-bio {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .author-name {
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+  }
+  .author-bio {
+    color: var(--color-text-muted);
   }
   .post-image {
     display: block;
