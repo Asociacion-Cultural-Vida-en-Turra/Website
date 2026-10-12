@@ -11,6 +11,7 @@ title: "Village festival"
 category: "Activities"
 date: "2026-09-26"
 description: "How we celebrated our village festival."
+author: "nombre-id"
 coverLines: ["A village", "celebrates."]
 tone: "sage"
 ---
@@ -29,7 +30,10 @@ The collection schema in `src/content.config.ts` validates these fields:
 | `category` | String | Yes | — | Category used to generate filters. Must not be empty after trimming whitespace; `Todas` is reserved for the filter that shows all posts. |
 | `date` | String | Yes | — | Valid calendar date in `YYYY-MM-DD` format, written in quotes. Used for chronological sorting and the displayed date. |
 | `description` | String | Yes | — | Summary displayed on the card. Must not be empty after trimming whitespace. |
+| `author` | Author reference | No | None | ID of a profile in `src/content/authors/`, usually the JSON filename without its extension. |
 | `image` | String (local image path) | No | None | Path relative to the Markdown file. Astro resolves the image for optimization. Takes priority over the text cover. |
 | `imageAlt` | String | No | `""` | Alternative text describing the image. Leave empty only for decorative images. |
 | `coverLines` | Array of strings | No | `[]` | Text cover content when no image is provided. Each item appears on a separate line. |
 | `tone` | String: `"sage"` or `"cream"` | No | `"sage"` | Background color variant for the text cover. Has no effect when an image is provided. |
+
+For the author collection schema and profile format, see [authors.md](authors.md).

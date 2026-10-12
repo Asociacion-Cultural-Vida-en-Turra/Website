@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BlogPostLayout from "@layouts/BlogPostLayout.astro";
 
@@ -16,9 +16,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const author = post.data.author ? await getEntry(post.data.author) : undefined;
 const { Content } = await render(post);
 ---
 
-<BlogPostLayout post={post.data}>
+<BlogPostLayout post={post.data} author={author?.data}>
   <Content />
 </BlogPostLayout>
