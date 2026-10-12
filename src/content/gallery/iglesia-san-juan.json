@@ -1,0 +1,75 @@
+{
+  "title": "Iglesia de San Juan",
+  "description": "Una colección de imágenes y videos que muestran nuestra iglesia románico-mudéjar de San Juan, un lugar de gran importancia histórica y cultural en Turra de Alba.",
+  "cover": "../../assets/iglesia-san-juan/cover.jpeg",
+  "coverAlt": "Iglesia de San Juan",
+  "items": [
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto1.jpeg",
+      "alt": "Foto 1",
+      "caption": "Vista exterior del ábside y de la espadaña."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto2.jpeg",
+      "alt": "Foto 2",
+      "caption": "Vista del interior de la iglesia."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto3.jpeg",
+      "alt": "Foto 3",
+      "caption": "Vista nocturna de la espadaña iluminada."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto4.jpeg",
+      "alt": "Foto 4",
+      "caption": "Otra perspectiva diurna de la espadaña, desde las eras."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto5.jpeg",
+      "alt": "Foto 5",
+      "caption": "Vista de la espadaña, al atardecer."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto6.jpeg",
+      "alt": "Foto 6",
+      "caption": "Vista trasera del ábside, desde las eras."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto7.jpeg",
+      "alt": "Foto 7",
+      "caption": "Vista trasera del ábside, al atardecer."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto8.jpeg",
+      "alt": "Foto 8",
+      "caption": "Vista de la iglesia, durante la nevada de Filomena (enero, 2021)."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto9.jpeg",
+      "alt": "Foto 9",
+      "caption": "Foto de la iglesia, en la nochevieja de 2020."
+    },
+    {
+      "type": "image",
+      "image": "../../assets/iglesia-san-juan/foto10.jpeg",
+      "alt": "Foto 10",
+      "caption": "Foto nocturna del ábside."
+    },
+    {
+      "type": "video",
+      "src": "videos/iglesia-san-juan/video1.mp4",
+      "poster": "../../assets/iglesia-san-juan/video1-poster.png",
+      "title": "Vista de la iglesia desde el aire.",
+      "caption": "Vista de la iglesia desde el aire."
+    }
+  ]
+}

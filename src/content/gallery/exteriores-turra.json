@@ -1,0 +1,43 @@
+{
+  "title": "Exteriores de Turra de Alba",
+  "description": "Una colección que muestra los exteriores del pueblo de Turra de Alba, incluyendo la iglesia y otros puntos de interés.",
+  "cover": "../../assets/exteriores-turra/cover.png",
+  "coverAlt": "Vista panorámica de Turra de Alba",
+  "items": [
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto1.jpeg",
+      "alt": "Foto 1"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto2.png",
+      "alt": "Foto 2"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto3.jpeg",
+      "alt": "Foto 3"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto4.jpeg",
+      "alt": "Foto 4"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto5.jpeg",
+      "alt": "Foto 5"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto6.jpeg",
+      "alt": "Foto 6"
+    },
+    {
+      "type": "image",
+      "image": "../../assets/exteriores-turra/foto7.jpeg",
+      "alt": "Foto 7"
+    }
+  ]
+}
