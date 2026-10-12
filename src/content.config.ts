@@ -1,4 +1,4 @@
-import { defineCollection } from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
@@ -11,10 +11,21 @@ const blog = defineCollection({
     }),
     date: z.iso.date(),
     description: z.string().trim().min(1),
+    author: reference("authors").optional(),
     image: image().optional(),
     imageAlt: z.string().default(""),
     coverLines: z.array(z.string()).default([]),
     tone: z.enum(["sage", "cream"]).default("sage"),
+  }),
+});
+
+const authors = defineCollection({
+  loader: glob({ base: "./src/content/authors", pattern: "*.json" }),
+  schema: ({ image }) => z.object({
+    name: z.string().trim().min(1),
+    bio: z.string().trim().optional(),
+    image: image().optional(),
+    imageAlt: z.string().default(""),
   }),
 });
 
@@ -54,4 +65,4 @@ const gallery = defineCollection({
   }),
 });
 
-export const collections = { blog, gallery };
+export const collections = { blog, authors, gallery };
