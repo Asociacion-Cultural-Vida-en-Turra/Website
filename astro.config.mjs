@@ -1,10 +1,14 @@
 import { defineConfig, fontProviders } from "astro/config"
 import pagefind from "astro-pagefind"
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://asociacion-cultural-vida-en-turra.github.io",
   base: "/Website",
   trailingSlash: "always",
+  vite: {
+    plugins: [tailwindcss()],
+  },
   fonts: [
     {
       provider: fontProviders.google(),
