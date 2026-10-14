@@ -21,122 +21,122 @@ import { linesOfAction } from "./lines-of-action";
       aria-roledescription="carrusel"
       opts={{ loop: true }}
     >
-    <CarouselContent class="association-carousel-content">
-      <CarouselItem
-        class="association-carousel-item"
-        aria-label="Quiénes somos"
-        aria-roledescription="diapositiva"
-      >
-        <article class="association-carousel-slide association-carousel-slide--feature">
-          <p class="association-slide-index">01</p>
-          <h3>Quiénes somos</h3>
-          <p class="association-slide-body">
-            Somos un grupo de vecinos de Turra de Alba unidos en una asociación cultural y medioambiental sin ánimo de lucro por el respeto a las tradiciones locales, el arte, la cultura, la regeneración y la protección de nuestro entorno cultural y medioambiental.
-          </p>
-        </article>
-      </CarouselItem>
-      <CarouselItem
-        class="association-carousel-item"
-        aria-label="Nuestra misión"
-        aria-roledescription="diapositiva"
-      >
-        <article class="association-carousel-slide association-carousel-slide--feature">
-          <p class="association-slide-index">02</p>
-          <h3>Nuestra misión</h3>
-          <p class="association-slide-body">
-            Fomentar el desarrollo sostenible y la conciencia ecológica a través de actividades
-            culturales, talleres educativos y proyectos de recuperación y conservación ambiental
-            en Turra de Alba.
-          </p>
-        </article>
-      </CarouselItem>
-      <CarouselItem
-        class="association-carousel-item"
-        aria-label="Nuestra visión"
-        aria-roledescription="diapositiva"
-      >
-        <article class="association-carousel-slide association-carousel-slide--feature">
-          <p class="association-slide-index">03</p>
-          <h3>Nuestra visión</h3>
-          <p class="association-slide-body">
-            Convertirnos en un referente de convivencia armónica entre el ser humano, la cultura
-            comunitaria y la naturaleza.
-          </p>
-        </article>
-      </CarouselItem>
-      <CarouselItem
-        class="association-carousel-item"
-        aria-label="Nuestros valores"
-        aria-roledescription="diapositiva"
-      >
-        <article class="association-carousel-slide">
-          <p class="association-slide-index">04</p>
-          <h3>Nuestros valores</h3>
-          <ul class="association-carousel-values">
-            <li>
-              <h4>Sostenibilidad</h4>
-              <p>Nuestras actividades respetan el equilibrio ecológico.</p>
-            </li>
-            <li>
-              <h4>Identidad cultural</h4>
-              <p> Divulgamos el arte, la historia de nuestras gentes y las costumbres locales. </p>
-            </li>
-            <li>
-              <h4>Patrimonio medioambiental</h4>
-              <p>Actuaciones encaminadas a recuperar y proteger las zonas verdes, el agua, la fauna y flora del lugar.</p>
-            </li>
-            <li>
-              <h4>Comunidad</h4>
-              <p>Creemos en el poder de la acción colectiva, la inclusión y la ilusión por conservar nuestras raíces culturales y nuestro patrimonio.</p>
-            </li>
-          </ul>
-        </article>
-      </CarouselItem>
-      <CarouselItem
-        class="association-carousel-item"
-        aria-label="Líneas de actuación"
-        aria-roledescription="diapositiva"
-      >
-        <article class="association-carousel-slide">
-          <p class="association-slide-index">05</p>
-          <h3>Líneas de actuación</h3>
-          <p class="association-slide-body">
-            En colaboración con el Ayuntamiento y con otras entidades públicas y privadas de la
-            provincia de Salamanca y de la Junta de Castilla y León:
-          </p>
-          <ul class="association-carousel-values">
-            {linesOfAction.map((line) => (
+      <CarouselContent class="association-carousel-content">
+        <CarouselItem
+          class="association-carousel-item"
+          aria-label="Quiénes somos"
+          aria-roledescription="diapositiva"
+        >
+          <article class="association-carousel-slide association-carousel-slide--feature">
+            <p class="association-slide-index">01</p>
+            <h3>Quiénes somos</h3>
+            <p class="association-slide-body">
+              Somos un grupo de vecinos de Turra de Alba unidos en una asociación cultural y medioambiental sin ánimo de lucro por el respeto a las tradiciones locales, el arte, la cultura, la regeneración y la protección de nuestro entorno cultural y medioambiental.
+            </p>
+          </article>
+        </CarouselItem>
+        <CarouselItem
+          class="association-carousel-item"
+          aria-label="Nuestra misión"
+          aria-roledescription="diapositiva"
+        >
+          <article class="association-carousel-slide association-carousel-slide--feature">
+            <p class="association-slide-index">02</p>
+            <h3>Nuestra misión</h3>
+            <p class="association-slide-body">
+              Fomentar el desarrollo sostenible y la conciencia ecológica a través de actividades
+              culturales, talleres educativos y proyectos de recuperación y conservación ambiental
+              en Turra de Alba.
+            </p>
+          </article>
+        </CarouselItem>
+        <CarouselItem
+          class="association-carousel-item"
+          aria-label="Nuestra visión"
+          aria-roledescription="diapositiva"
+        >
+          <article class="association-carousel-slide association-carousel-slide--feature">
+            <p class="association-slide-index">03</p>
+            <h3>Nuestra visión</h3>
+            <p class="association-slide-body">
+              Convertirnos en un referente de convivencia armónica entre el ser humano, la cultura
+              comunitaria y la naturaleza.
+            </p>
+          </article>
+        </CarouselItem>
+        <CarouselItem
+          class="association-carousel-item"
+          aria-label="Nuestros valores"
+          aria-roledescription="diapositiva"
+        >
+          <article class="association-carousel-slide">
+            <p class="association-slide-index">04</p>
+            <h3>Nuestros valores</h3>
+            <ul class="association-carousel-values">
               <li>
-                <h4>{line.number} · {line.title}</h4>
-                <p>{line.description}</p>
+                <h4>Sostenibilidad</h4>
+                <p>Nuestras actividades respetan el equilibrio ecológico.</p>
               </li>
-            ))}
-            <li class="association-slide-more-item">
-              <p class="association-slide-more">Y mucho más…</p>
-            </li>
-          </ul>
-        </article>
-      </CarouselItem>
-    </CarouselContent>
-    <CarouselPrevious
-      class="association-carousel-control association-carousel-control--previous"
-      aria-label="Anterior"
-    />
-    <CarouselNext
-      class="association-carousel-control association-carousel-control--next"
-      aria-label="Siguiente"
-    />
-    <div class="association-carousel-dots" role="group" aria-label="Elegir diapositiva">
-      {Array.from({ length: 5 }, (_, index) => (
-        <button
-          type="button"
-          class="association-carousel-dot"
-          data-carousel-dot={index}
-          aria-label={`Ir a la diapositiva ${index + 1}`}
-          aria-current={index === 0 ? "true" : undefined}
-        />
-      ))}
-    </div>
+              <li>
+                <h4>Identidad cultural</h4>
+                <p> Divulgamos el arte, la historia de nuestras gentes y las costumbres locales. </p>
+              </li>
+              <li>
+                <h4>Patrimonio medioambiental</h4>
+                <p>Actuaciones encaminadas a recuperar y proteger las zonas verdes, el agua, la fauna y flora del lugar.</p>
+              </li>
+              <li>
+                <h4>Comunidad</h4>
+                <p>Creemos en el poder de la acción colectiva, la inclusión y la ilusión por conservar nuestras raíces culturales y nuestro patrimonio.</p>
+              </li>
+            </ul>
+          </article>
+        </CarouselItem>
+        <CarouselItem
+          class="association-carousel-item"
+          aria-label="Líneas de actuación"
+          aria-roledescription="diapositiva"
+        >
+          <article class="association-carousel-slide">
+            <p class="association-slide-index">05</p>
+            <h3>Líneas de actuación</h3>
+            <p class="association-slide-body">
+              En colaboración con el Ayuntamiento y con otras entidades públicas y privadas de la
+              provincia de Salamanca y de la Junta de Castilla y León:
+            </p>
+            <ul class="association-carousel-values">
+              {linesOfAction.map((line) => (
+                <li>
+                  <h4>{line.number} · {line.title}</h4>
+                  <p>{line.description}</p>
+                </li>
+              ))}
+              <li class="association-slide-more-item">
+                <p class="association-slide-more">Y mucho más…</p>
+              </li>
+            </ul>
+          </article>
+        </CarouselItem>
+      </CarouselContent>
+      <CarouselPrevious
+        class="association-carousel-control association-carousel-control--previous"
+        aria-label="Anterior"
+      />
+      <CarouselNext
+        class="association-carousel-control association-carousel-control--next"
+        aria-label="Siguiente"
+      />
+      <div class="association-carousel-dots" role="group" aria-label="Elegir diapositiva">
+        {Array.from({ length: 5 }, (_, index) => (
+          <button
+            type="button"
+            class="association-carousel-dot"
+            data-carousel-dot={index}
+            aria-label={`Ir a la diapositiva ${index + 1}`}
+            aria-current={index === 0 ? "true" : undefined}
+          />
+        ))}
+      </div>
     </Carousel>
   </div>
 </section>
@@ -155,11 +155,13 @@ import { linesOfAction } from "./lines-of-action";
   const carousel = document.querySelector<CarouselElement>("#association-carousel");
 
   if (carousel) {
+    let controlsInitialized = false;
+
     const initializeControls = () => {
       const api = carousel.__fulldevCarouselApi;
-      if (!api || carousel.dataset.controlsInitialized === "true") return;
+      if (!api || controlsInitialized) return;
 
-      carousel.dataset.controlsInitialized = "true";
+      controlsInitialized = true;
       carousel.addEventListener("pointermove", (event) => {
         if (event.pointerType !== "mouse") return;
 
@@ -178,9 +180,7 @@ import { linesOfAction } from "./lines-of-action";
         delete carousel.dataset.arrowHover;
       });
 
-      const dots = Array.from(
-        carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"),
-      );
+      const dots = carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]");
       const syncDots = () => {
         const selected = api.selectedScrollSnap();
         dots.forEach((dot, index) => {
