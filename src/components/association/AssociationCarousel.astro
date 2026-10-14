@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@components/ui/carousel";
+import AssociationHelp from "./AssociationHelp.astro";
 
 const linesOfAction = [
   {
@@ -28,7 +29,11 @@ const linesOfAction = [
 ];
 ---
 
-<section class="association-carousel-section" aria-labelledby="association-carousel-title">
+<section
+  id="asociacion"
+  class="association-carousel-section"
+  aria-labelledby="association-carousel-title"
+>
   <div class="association-carousel-inner">
     <header class="carousel-heading">
       <h2 id="association-carousel-title">Conócenos</h2>
@@ -157,6 +162,13 @@ const linesOfAction = [
         ))}
       </div>
     </Carousel>
+    <AssociationHelp />
+    <blockquote class="association-quote">
+      <p>
+        «Llegar juntos es el principio. Mantenerse juntos es el progreso. Trabajar juntos es el éxito.
+        Nadie sobra. Ninguno de nosotros es tan inteligente como todos nosotros juntos.»
+      </p>
+    </blockquote>
   </div>
 </section>
 
@@ -243,6 +255,30 @@ const linesOfAction = [
   .carousel-heading h2 {
     margin: 0;
     font-size: clamp(2.25rem, 4vw, 3rem);
+  }
+
+  :global(.association-help .eyebrow) {
+    margin: 0 0 0.75rem;
+    color: var(--color-accent);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+  }
+
+  :global(.association-quote) {
+    margin: clamp(3rem, 5vw, 5rem) 0 0;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.6;
+  }
+
+  :global(.association-quote p) {
+    max-width: 54rem;
+    margin: 0;
   }
 
   :global(.association-carousel) {

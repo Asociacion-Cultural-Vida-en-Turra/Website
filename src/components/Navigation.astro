@@ -3,14 +3,12 @@ import Button from "@components/Button.astro";
 import Dropdown from "@components/Dropdown.astro";
 ---
 
-<!-- TODO (Carlos): Add href links to each navigation item -->
 <nav class="navigation" aria-label="Main navigation">
   <a class="nav-link" href={import.meta.env.BASE_URL}>Inicio</a>
+  <a class="nav-link" href={`${import.meta.env.BASE_URL}#asociacion`}>La asociación</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}blog/`}>El blog</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}galeria/`}>Galería</a>
-  <a class="nav-link" href={`${import.meta.env.BASE_URL}#asociacion`}>La asociación</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}#contacto`}>Contacto</a>
-
   <Button href={`${import.meta.env.BASE_URL}participa/`} target="_blank">
     <span class="button-text">
         <span>Participa</span>
@@ -25,9 +23,9 @@ import Dropdown from "@components/Dropdown.astro";
       label="Menú"
       options={[
           { label: "Inicio", href: import.meta.env.BASE_URL },
+          { label: "La asociación", href: `${import.meta.env.BASE_URL}#asociacion` },
           { label: "El blog", href: `${import.meta.env.BASE_URL}blog/` },
           { label: "Galería", href: `${import.meta.env.BASE_URL}galeria/` },
-          { label: "La asociación", href: `${import.meta.env.BASE_URL}#asociacion` },
           { label: "Contacto", href: `${import.meta.env.BASE_URL}#contacto` },
           { label: "Participa", href: `${import.meta.env.BASE_URL}participa/`, target: "_blank" },
       ]}

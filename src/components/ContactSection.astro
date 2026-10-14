@@ -1,34 +1,47 @@
 ---
 import Form from "@components/Form.astro";
+import Map from "@components/Map.astro";
 import { contactForm } from "../forms/contact";
 ---
 
 <section id="contacto" class="contact" aria-labelledby="contact-title">
-  <div class="contact-intro">
-    <p class="eyebrow">Estamos cerca</p>
-    <h2 id="contact-title">¿Tienes algo<br />que contarnos?</h2>
-    <p class="description">Una idea para el pueblo, una foto para el blog o ganas de sumarte. Nos encantará saber de ti.</p>
-    <div class="contact-details">
-      <p class="location">Turra de Alba</p>
-      <p>Tu mensaje llegará a la asociación.</p>
+  <div class="contact-content">
+    <div class="contact-intro">
+      <p class="eyebrow">Estamos cerca</p>
+      <h2 id="contact-title">¿Tienes algo<br />que contarnos?</h2>
+      <p class="description">Una idea para el pueblo, una foto para el blog o ganas de sumarte. Nos encantará saber de ti.</p>
+      <div class="contact-details">
+        <p class="location">Turra de Alba</p>
+        <p>Tu mensaje llegará a la asociación.</p>
+      </div>
     </div>
+
+    <Form id="contact-form" {...contactForm} />
   </div>
 
-  <Form id="contact-form" {...contactForm} />
+  <div class="contact-map">
+    <Map address="Turra de Alba, 37871, Salamanca" />
+  </div>
 </section>
 
 <style>
   .contact {
     box-sizing: border-box;
-    display: grid;
-    gap: 2.5rem;
     max-width: 80rem;
     margin-inline: auto;
+    border-top: 1px solid var(--color-border);
     padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
     scroll-margin-top: 2rem;
   }
+  .contact-content {
+    display: grid;
+    gap: 2.5rem;
+  }
   .contact-intro {
     max-width: 30rem;
+  }
+  .contact-map {
+    margin-top: 3rem;
   }
   .eyebrow {
     margin: 0 0 1.5rem;
@@ -60,7 +73,7 @@ import { contactForm } from "../forms/contact";
     font-weight: var(--font-semibold);
   }
   @media (min-width: 48rem) {
-    .contact {
+    .contact-content {
       grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
       gap: clamp(3rem, 7vw, 8rem);
     }
