@@ -208,21 +208,28 @@ const linesOfAction = [
       });
 
       const dots = carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]");
-      const syncDots = () => {
+      const slides = carousel.querySelectorAll<HTMLElement>(".association-carousel-item");
+      const syncCarouselState = () => {
         const selected = api.selectedScrollSnap();
         dots.forEach((dot, index) => {
           if (index === selected) dot.setAttribute("aria-current", "true");
           else dot.removeAttribute("aria-current");
         });
+        slides.forEach((slide, index) => {
+          const isInactive = index !== selected;
+          slide.setAttribute("aria-hidden", String(isInactive));
+          slide.inert = isInactive;
+        });
       };
 
       dots.forEach((dot) => {
         dot.addEventListener("click", () => {
-          api.scrollTo(Number(dot.dataset.carouselDot));
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          api.scrollTo(Number(dot.dataset.carouselDot), reduceMotion);
         });
       });
-      carousel.addEventListener("carousel:select", syncDots);
-      syncDots();
+      carousel.addEventListener("carousel:select", syncCarouselState);
+      syncCarouselState();
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
