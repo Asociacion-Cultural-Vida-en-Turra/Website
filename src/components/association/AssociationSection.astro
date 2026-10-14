@@ -1,7 +1,6 @@
 ---
 import AssociationHelp from "./AssociationHelp.astro";
 import AssociationIntro from "./AssociationIntro.astro";
-import AssociationQuote from "./AssociationQuote.astro";
 import Map from "@components/Map.astro";
 ---
 
@@ -10,7 +9,12 @@ import Map from "@components/Map.astro";
     <AssociationIntro />
     <Map address="Turra de Alba, 37871, Salamanca" />
     <AssociationHelp />
-    <AssociationQuote />
+    <blockquote class="association-quote">
+      <p>
+        «Llegar juntos es el principio. Mantenerse juntos es el progreso. Trabajar juntos es el éxito.
+        Nadie sobra. Ninguno de nosotros es tan inteligente como todos nosotros juntos.»
+      </p>
+    </blockquote>
   </div>
 </section>
 
@@ -38,6 +42,22 @@ import Map from "@components/Map.astro";
   :global(.association h2) {
     margin: 0;
     font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .association-quote {
+    margin: clamp(3rem, 5vw, 5rem) 0 0;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.6;
+  }
+
+  .association-quote p {
+    max-width: 54rem;
+    margin: 0;
   }
 
   @media (min-width: 75rem) {
