@@ -217,7 +217,7 @@ const linesOfAction = [
       window.setInterval(() => {
         if (carousel.matches(":hover") || carousel.contains(document.activeElement)) return;
         api.scrollNext();
-      }, 6000);
+      }, 10000);
     };
 
     carousel.addEventListener("carousel:init", initializeControls);
