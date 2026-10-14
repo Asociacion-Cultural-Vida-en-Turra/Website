@@ -1,0 +1,48 @@
+---
+import AssociationHelp from "./AssociationHelp.astro";
+import AssociationIntro from "./AssociationIntro.astro";
+import AssociationQuote from "./AssociationQuote.astro";
+import Map from "@components/Map.astro";
+---
+
+<section id="asociacion" class="association" aria-labelledby="association-title">
+  <div class="association-content">
+    <AssociationIntro />
+    <Map address="Turra de Alba, 37871, Salamanca" />
+    <AssociationHelp />
+    <AssociationQuote />
+  </div>
+</section>
+
+<style>
+  .association {
+    background: var(--color-surface-muted);
+    scroll-margin-top: 2rem;
+  }
+
+  .association-content {
+    box-sizing: border-box;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 5rem);
+  }
+
+  :global(.association .eyebrow) {
+    margin: 0 0 1.5rem;
+    color: var(--color-accent);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+  }
+
+  :global(.association h2) {
+    margin: 0;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 75rem) {
+    .association-content {
+      max-width: 96rem;
+    }
+  }
+</style>

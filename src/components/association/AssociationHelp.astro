@@ -1,0 +1,92 @@
+---
+import Button from "@components/Button.astro";
+---
+
+<section class="association-help" aria-labelledby="help-title">
+  <div class="help-intro">
+    <p class="eyebrow">Cómo puedes ayudar</p>
+    <h2 id="help-title">Si quieres que nuestro pueblo no quede en el olvido, colabora.</h2>
+  </div>
+  <div class="help-option">
+    <h3>Voluntariado</h3>
+    <p>
+      Dona tu tiempo y talento en nuestras actuaciones, jornadas ecológicas y eventos festivos y
+      culturales.
+    </p>
+    <Button href={import.meta.env.BASE_URL + "#contacto"} variant="secondary">
+      Quiero ser voluntario/a <span aria-hidden="true">↗</span>
+    </Button>
+  </div>
+  <div class="help-option membership">
+    <h3>Hazte socio/a</h3>
+    <p class="membership-price">20 € <span>/ año</span></p>
+    <p>
+      Tu aportación financia directamente nuestros proyectos de conservación y divulgación.
+    </p>
+    <Button href={import.meta.env.BASE_URL + "participa/"} target="_blank">
+      Hacerme socio/a <span aria-hidden="true">↗</span>
+    </Button>
+  </div>
+</section>
+
+<style>
+  .association-help {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3rem, 5vw, 5rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .help-intro .eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .help-intro h2 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .help-option {
+    min-width: 0;
+  }
+
+  .help-option h3 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 1.25rem;
+  }
+
+  .help-option > p:not(.membership-price) {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .help-option .button {
+    margin-top: 1.25rem;
+  }
+
+  .membership-price {
+    margin: 0.75rem 0 0;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .membership-price span {
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 48rem) {
+    .association-help {
+      grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 4rem);
+    }
+  }
+</style>
