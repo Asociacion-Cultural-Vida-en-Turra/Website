@@ -142,11 +142,7 @@ import { linesOfAction } from "./lines-of-action";
 </section>
 
 <script>
-  type CarouselApi = {
-    scrollNext: () => void;
-    scrollTo: (index: number) => void;
-    selectedScrollSnap: () => number;
-  };
+  import type { CarouselApi } from "@components/ui/carousel";
 
   type CarouselElement = HTMLElement & {
     __fulldevCarouselApi?: CarouselApi;
