@@ -145,6 +145,8 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
   .prose {
+    color: var(--color-text);
+    font-weight: 500;
     line-height: 1.8;
   }
   /* Markdown is rendered through the slot, so target its descendants globally. */
@@ -160,6 +162,7 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
   .prose :global(h6) {
     margin: 1.75em 0 0.75em;
     color: var(--color-primary);
+    font-weight: var(--font-bold);
     scroll-margin-top: 2rem;
   }
   .prose :global(h2) {
