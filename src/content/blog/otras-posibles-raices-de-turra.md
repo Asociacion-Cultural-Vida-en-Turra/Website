@@ -3,8 +3,8 @@ title: "Otras posibles raíces de Turra"
 category: "La historia de Turra de Alba"
 date: "2026-11-08"
 description: "Otras posibles raíces de Turra"
-image: "../../assets/mudejares/mudejares.jpg"
-imageAlt: "Los mudéjares en Turra de Alba"
+image: "../../assets/otras-posibles-raices-de-turra/regato.png"
+imageAlt: "Otras posibles raíces de Turra"
 author: "maria-concepcion-curto-ciudad"
 ---
 
