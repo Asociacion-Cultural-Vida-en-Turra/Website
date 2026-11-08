@@ -1,0 +1,43 @@
+{
+    "title": "Torrente",
+    "description": "Fotos de nuestro querido caballo 'Torrente'.",
+    "cover": "../../assets/fotos-torrente/cover.jpeg",
+    "coverAlt": "Torrente",
+    "items": [
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto1.jpeg",
+            "alt": "Foto 1"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto2.jpeg",
+            "alt": "Foto 2"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto3.jpeg",
+            "alt": "Foto 3"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto4.jpeg",
+            "alt": "Foto 4"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto5.jpeg",
+            "alt": "Foto 5"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto6.jpeg",
+            "alt": "Foto 6"
+        },
+        {
+            "type": "image",
+            "image": "../../assets/fotos-torrente/foto7.jpeg",
+            "alt": "Foto 7"
+        }
+    ]
+}
