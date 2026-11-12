@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asociacion-cultural-vida-en-turra.github.io/Website/sitemap-index.xml

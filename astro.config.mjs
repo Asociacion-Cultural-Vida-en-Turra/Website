@@ -1,5 +1,6 @@
 import { defineConfig, fontProviders } from "astro/config"
 import pagefind from "astro-pagefind"
+import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
@@ -36,6 +37,7 @@ export default defineConfig({
     }
   ],
   integrations: [
-    pagefind()
+    pagefind(),
+    sitemap()
   ],
 })
