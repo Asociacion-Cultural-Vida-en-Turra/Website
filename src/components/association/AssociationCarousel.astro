@@ -6,6 +6,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@components/ui/carousel";
+import PauseIcon from "@lucide/astro/icons/pause";
+import PlayIcon from "@lucide/astro/icons/play";
 import AssociationHelp from "./AssociationHelp.astro";
 
 const linesOfAction = [
@@ -151,6 +153,10 @@ const linesOfAction = [
         aria-label="Siguiente"
       />
       <div class="association-carousel-dots" role="group" aria-label="Elegir diapositiva">
+        <button type="button" class="association-carousel-toggle" data-carousel-toggle aria-pressed="false" aria-label="Pausar rotación automática">
+          <PauseIcon aria-hidden="true" class="icon-pause" />
+          <PlayIcon aria-hidden="true" class="icon-play" />
+        </button>
         {Array.from({ length: 5 }, (_, index) => (
           <button
             type="button"
@@ -233,10 +239,27 @@ const linesOfAction = [
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      window.setInterval(() => {
-        if (carousel.matches(":hover") || carousel.contains(document.activeElement)) return;
-        api.scrollNext();
-      }, 10000);
+      let paused = false;
+      let timer: number;
+      const startTimer = () => {
+        window.clearInterval(timer);
+        timer = window.setInterval(() => api.scrollNext(), 10000);
+      };
+      const toggle = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
+      const setPaused = (value: boolean) => {
+        paused = value;
+        toggle?.setAttribute("aria-pressed", String(paused));
+        if (paused) window.clearInterval(timer);
+        else startTimer();
+      };
+
+      toggle?.addEventListener("click", () => setPaused(!paused));
+      // Manual navigation means the user is in control: stop the automatic rotation.
+      carousel
+        .querySelectorAll("[data-carousel-dot], [data-carousel-previous], [data-carousel-next]")
+        .forEach((control) => control.addEventListener("click", () => setPaused(true)));
+
+      startTimer();
     };
 
     carousel.addEventListener("carousel:init", initializeControls);
@@ -377,16 +400,76 @@ const linesOfAction = [
     top: 0;
     right: 0;
     display: flex;
+    align-items: center;
     gap: 0;
   }
 
   :global(.association-carousel-dot) {
+    position: relative;
     width: 1.25rem;
     height: 2px;
     padding: 0;
     border: 0;
     background: var(--color-border);
     cursor: pointer;
+  }
+
+  /* Enlarges the hit area to 24px (WCAG 2.5.8) without changing the visible line. */
+  :global(.association-carousel-dot::after) {
+    content: "";
+    position: absolute;
+    inset: -11px 0;
+  }
+
+  :global(.association-carousel-toggle) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: color 160ms ease;
+  }
+
+  /* No autoplay with reduced motion, so there is nothing to pause. */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.association-carousel-toggle) {
+      display: none;
+    }
+  }
+
+  :global(.association-carousel-toggle .icon-play),
+  :global(.association-carousel-toggle[aria-pressed="true"] .icon-pause) {
+    display: none;
+  }
+
+  :global(.association-carousel-toggle[aria-pressed="true"] .icon-play) {
+    display: block;
+  }
+
+  :global(.association-carousel-toggle:hover) {
+    color: var(--color-accent);
+  }
+
+  :global(.association-carousel-toggle svg) {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+
+  :global(.association-carousel-toggle:focus-visible) {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  :global(.association-carousel-dot:focus-visible) {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 
   :global(.association-carousel-dot[aria-current="true"]) {
