@@ -2,6 +2,7 @@
 import Button from "@components/Button.astro";
 import FormField from "@components/FormField.astro";
 import type { FormConfig } from "../forms/types";
+import { SITE_NAME, WEB3FORMS_SCRIPT_URL, WEB3FORMS_SUBMIT_URL } from "../consts";
 
 interface Props extends FormConfig {
   /** Unique prefix for field IDs; generated automatically when omitted. */
@@ -25,12 +26,12 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
 }
 ---
 
-<form id={id} action="https://api.web3forms.com/submit" method="POST" data-validated-form data-access-key={accessKey.trim()} data-success-message={successMessage} aria-describedby={`${id}-note`}>
+<form id={id} action={WEB3FORMS_SUBMIT_URL} method="POST" data-validated-form data-access-key={accessKey.trim()} data-success-message={successMessage} aria-describedby={`${id}-note`}>
   <fieldset disabled>
     <legend class="sr-only">{legend}</legend>
     <input type="hidden" name="access_key" value={accessKey.trim()} />
     <input type="hidden" name="subject" value={subject} />
-    <input type="hidden" name="from_name" value="Vida en Turra" />
+    <input type="hidden" name="from_name" value={SITE_NAME} />
     <div class="form-fields">
       {fields.map((field) => <FormField formId={id} field={field} />)}
     </div>
@@ -114,7 +115,7 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
       form.setAttribute("aria-busy", "true");
       status.textContent = "Enviando…";
       try {
-        const response = await fetch("https://api.web3forms.com/submit", {
+        const response = await fetch(form.action, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(data),
@@ -143,7 +144,7 @@ if (new Set(names).size !== names.length || names.some((name) => !name || /\s/.t
 
 </script>
 
-{accessKey.trim() && <script is:inline src="https://web3forms.com/client/script.js" async defer></script>}
+{accessKey.trim() && <script is:inline src={WEB3FORMS_SCRIPT_URL} async defer></script>}
 
 <style>
   form {

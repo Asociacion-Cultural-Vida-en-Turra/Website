@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
+import { ORGANIZATION_NAME } from "../consts";
 
 interface Props {
   post: CollectionEntry<"blog">["data"];
@@ -35,7 +36,7 @@ const dateLabel = new Intl.DateTimeFormat("es-ES", {
       inLanguage: "es",
       mainEntityOfPage: Astro.url.href,
       ...(author && { author: { "@type": "Person", name: author.name } }),
-      publisher: { "@type": "Organization", name: "Asociación Cultural y Medioambiental Vida en Turra" },
+      publisher: { "@type": "Organization", name: ORGANIZATION_NAME },
     },
     {
       "@type": "BreadcrumbList",

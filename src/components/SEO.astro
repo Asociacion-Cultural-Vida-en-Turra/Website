@@ -14,7 +14,7 @@ interface Props {
     jsonLd?: Record<string, unknown>[]
 }
 
-const SITE_NAME = "Vida en Turra"
+import { ORGANIZATION_NAME, SITE_NAME } from "../consts"
 
 const {
     title,
@@ -32,7 +32,7 @@ const canonical = new URL(Astro.url.pathname, site).href
 const social = await getImage({ src: image ?? logo, width: image ? 1200 : 630, format: image ? "jpg" : "png", quality: 80 })
 const icon = await getImage({ src: logo, width: 192, height: 192, format: "png" })
 const socialUrl = new URL(social.src, site).href
-const socialAlt = image ? imageAlt : "Logotipo de la Asociación Cultural y Medioambiental Vida en Turra"
+const socialAlt = image ? imageAlt : `Logotipo de la ${ORGANIZATION_NAME}`
 ---
 
 <link rel="canonical" href={canonical} />
