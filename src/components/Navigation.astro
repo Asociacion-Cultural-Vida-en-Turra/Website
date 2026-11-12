@@ -3,13 +3,13 @@ import Button from "@components/Button.astro";
 import Dropdown from "@components/Dropdown.astro";
 ---
 
-<nav class="navigation" aria-label="Main navigation">
+<nav class="navigation" aria-label="Navegación principal">
   <a class="nav-link" href={import.meta.env.BASE_URL}>Inicio</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}#asociacion`}>La asociación</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}blog/`}>El blog</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}galeria/`}>Galería</a>
   <a class="nav-link" href={`${import.meta.env.BASE_URL}#contacto`}>Contacto</a>
-  <Button href={`${import.meta.env.BASE_URL}participa/`} target="_blank">
+  <Button href={`${import.meta.env.BASE_URL}participa/`}>
     <span class="button-text">
         <span>Participa</span>
         <span aria-hidden="true" class="button-icon">↗</span>
@@ -27,7 +27,7 @@ import Dropdown from "@components/Dropdown.astro";
           { label: "El blog", href: `${import.meta.env.BASE_URL}blog/` },
           { label: "Galería", href: `${import.meta.env.BASE_URL}galeria/` },
           { label: "Contacto", href: `${import.meta.env.BASE_URL}#contacto` },
-          { label: "Participa", href: `${import.meta.env.BASE_URL}participa/`, target: "_blank" },
+          { label: "Participa", href: `${import.meta.env.BASE_URL}participa/` },
       ]}
     >
         <Fragment slot="trigger">
