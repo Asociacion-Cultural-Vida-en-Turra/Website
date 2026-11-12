@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import GalleryCard from "@components/GalleryCard.astro";
@@ -8,9 +9,26 @@ const albums = (await getCollection("gallery")).sort(
   (a, b) => a.data.title.localeCompare(b.data.title, "es") || a.id.localeCompare(b.id),
 );
 const description = "Recuerdos de Turra de Alba.";
+
+const covers = await Promise.all(albums.map((album) => getImage({ src: album.data.cover, width: 1200 })));
+const jsonLd = [
+  {
+    "@type": "CollectionPage",
+    name: "Galería",
+    description,
+    url: Astro.url.href,
+    inLanguage: "es",
+    hasPart: albums.map((album, index) => ({
+      "@type": "ImageGallery",
+      name: album.data.title,
+      description: album.data.description,
+      image: new URL(covers[index].src, Astro.site).href,
+    })),
+  },
+];
 ---
 
-<Layout title="Galería" description={description}>
+<Layout title="Galería" description={description} jsonLd={jsonLd}>
   <main class="gallery-index" aria-labelledby="gallery-title">
     <SearchBar id="gallery-search" collection="gallery" placeholder="Buscar colecciones…">
       <header slot="heading" class="gallery-heading">

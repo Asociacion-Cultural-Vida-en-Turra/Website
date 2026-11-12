@@ -2,7 +2,7 @@
 title: "El agua como motor de vida en la historia de Turra de Alba"
 category: "La historia de Turra de Alba"
 date: "2026-10-20"
-description: "La importancia del agua en Turra de Alba"
+description: "Cómo el agua determinó el asentamiento de Turra de Alba desde el siglo XIV y la herencia de regadío, acequias y huertas de los mudéjares."
 image: "../../assets/exteriores-turra/foto2.png"
 imageAlt: "El agua como motor de vida en la historia de Turra de Alba"
 author: "maria-concepcion-curto-ciudad"

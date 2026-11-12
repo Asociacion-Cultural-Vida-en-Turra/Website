@@ -1,10 +1,12 @@
 import { defineConfig, fontProviders } from "astro/config"
 import pagefind from "astro-pagefind"
+import sitemap from "@astrojs/sitemap"
+import { SITE_URL, BASE_PATH } from "./site.config.mjs"
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://asociacion-cultural-vida-en-turra.github.io",
-  base: "/Website",
+  site: SITE_URL,
+  base: BASE_PATH,
   trailingSlash: "always",
   vite: {
     plugins: [tailwindcss()],
@@ -36,6 +38,7 @@ export default defineConfig({
     }
   ],
   integrations: [
-    pagefind()
+    pagefind(),
+    sitemap()
   ],
 })

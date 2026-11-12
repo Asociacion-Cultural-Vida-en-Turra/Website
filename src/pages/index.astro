@@ -6,7 +6,25 @@ import BlogSection from "@components/BlogSection.astro";
 import ContactSection from "@components/ContactSection.astro";
 ---
 
-<Layout title="Mi blog">
+<Layout
+	title="Asociación Cultural y Medioambiental Vida en Turra"
+	suffix={false}
+	jsonLd={[
+		{
+			"@type": "Organization",
+			"@id": new URL(import.meta.env.BASE_URL, Astro.site).href + "#organization",
+			name: "Asociación Cultural y Medioambiental Vida en Turra",
+			url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+			address: { "@type": "PostalAddress", addressLocality: "Turra de Alba", postalCode: "37871", addressRegion: "Salamanca", addressCountry: "ES" },
+		},
+		{
+			"@type": "WebSite",
+			name: "Vida en Turra",
+			url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+			inLanguage: "es",
+		},
+	]}
+>
 	<Hero slot="hero" />
 	<AssociationCarousel />
 	<BlogSection />
