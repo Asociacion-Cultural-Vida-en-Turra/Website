@@ -392,35 +392,51 @@ const linesOfAction = [
     position: absolute;
     top: 0;
     right: 0;
-    align-items: center;
     display: flex;
+    align-items: center;
     gap: 0;
   }
 
   :global(.association-carousel-dot) {
-    /* 24px hit area (WCAG 2.5.8) around a 2px visible line. */
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: calc((1.5rem - 2px) / 2) 0.125rem;
+    position: relative;
+    width: 1.25rem;
+    height: 2px;
+    padding: 0;
     border: 0;
     background: var(--color-border);
-    background-clip: content-box;
     cursor: pointer;
   }
 
+  /* Enlarges the hit area to 24px (WCAG 2.5.8) without changing the visible line. */
+  :global(.association-carousel-dot::after) {
+    content: "";
+    position: absolute;
+    inset: -11px 0;
+  }
+
+  /* Visible only for keyboard focus: mouse users already pause by hovering. */
   :global(.association-carousel-toggle) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.5rem;
+    width: 0;
     height: 1.5rem;
-    margin-right: 0.5rem;
     padding: 0;
+    overflow: hidden;
     border: 0;
     background: transparent;
     color: var(--color-primary);
+    opacity: 0;
     cursor: pointer;
-    transition: color 160ms ease;
+  }
+
+  :global(.association-carousel-toggle:focus-visible) {
+    width: 1.5rem;
+    margin-right: 0.5rem;
+    opacity: 1;
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    overflow: visible;
   }
 
   :global(.association-carousel-toggle:hover) {
@@ -432,7 +448,6 @@ const linesOfAction = [
     height: 14px;
   }
 
-  :global(.association-carousel-toggle:focus-visible),
   :global(.association-carousel-dot:focus-visible) {
     outline: 3px solid var(--color-focus-ring);
     outline-offset: 2px;
