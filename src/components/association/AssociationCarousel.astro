@@ -241,24 +241,40 @@ const linesOfAction = [
 
       const toggle = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
       let paused = false;
+      // Set when the user explicitly resumes: the toggle itself holds focus and the
+      // pointer, so hover/focus must not suppress the rotation they just asked for.
+      let resumedByUser = false;
+      let timer: number | undefined;
+      const startTimer = () => {
+        window.clearInterval(timer);
+        timer = window.setInterval(() => {
+          const interacting = carousel.matches(":hover") || carousel.contains(document.activeElement);
+          if (paused || (interacting && !resumedByUser)) return;
+          api.scrollNext();
+        }, 10000);
+      };
       const setPaused = (value: boolean) => {
         paused = value;
+        resumedByUser = false;
         if (!toggle) return;
         toggle.setAttribute("aria-pressed", String(paused));
         toggle.setAttribute("aria-label", paused ? "Reanudar rotación automática" : "Pausar rotación automática");
         toggle.querySelector<SVGElement>("[data-icon-pause]")!.toggleAttribute("hidden", paused);
         toggle.querySelector<SVGElement>("[data-icon-play]")!.toggleAttribute("hidden", !paused);
       };
-      toggle?.addEventListener("click", () => setPaused(!paused));
+      toggle?.addEventListener("click", () => {
+        setPaused(!paused);
+        if (!paused) {
+          resumedByUser = true;
+          startTimer();
+        }
+      });
       // Manual navigation means the user is in control: stop the automatic rotation.
       carousel
         .querySelectorAll("[data-carousel-dot], [data-carousel-previous], [data-carousel-next]")
         .forEach((control) => control.addEventListener("click", () => setPaused(true)));
 
-      window.setInterval(() => {
-        if (paused || carousel.matches(":hover") || carousel.contains(document.activeElement)) return;
-        api.scrollNext();
-      }, 10000);
+      startTimer();
     };
 
     carousel.addEventListener("carousel:init", initializeControls);
