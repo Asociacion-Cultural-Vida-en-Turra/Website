@@ -6,6 +6,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@components/ui/carousel";
+import PauseIcon from "@lucide/astro/icons/pause";
+import PlayIcon from "@lucide/astro/icons/play";
 import AssociationHelp from "./AssociationHelp.astro";
 
 const linesOfAction = [
@@ -151,8 +153,9 @@ const linesOfAction = [
         aria-label="Siguiente"
       />
       <div class="association-carousel-dots" role="group" aria-label="Elegir diapositiva">
-        <button type="button" class="association-carousel-toggle" data-carousel-toggle aria-pressed="false">
-          Pausar rotación
+        <button type="button" class="association-carousel-toggle" data-carousel-toggle aria-pressed="false" aria-label="Pausar rotación automática">
+          <PauseIcon aria-hidden="true" data-icon-pause />
+          <PlayIcon aria-hidden="true" data-icon-play hidden />
         </button>
         {Array.from({ length: 5 }, (_, index) => (
           <button
@@ -241,7 +244,9 @@ const linesOfAction = [
       toggle?.addEventListener("click", () => {
         paused = !paused;
         toggle.setAttribute("aria-pressed", String(paused));
-        toggle.textContent = paused ? "Reanudar rotación" : "Pausar rotación";
+        toggle.setAttribute("aria-label", paused ? "Reanudar rotación automática" : "Pausar rotación automática");
+        toggle.querySelector<SVGElement>("[data-icon-pause]")!.toggleAttribute("hidden", paused);
+        toggle.querySelector<SVGElement>("[data-icon-play]")!.toggleAttribute("hidden", !paused);
       });
 
       window.setInterval(() => {
@@ -404,15 +409,27 @@ const linesOfAction = [
   }
 
   :global(.association-carousel-toggle) {
-    min-height: 1.5rem;
-    margin-right: 0.75rem;
-    padding: 0 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    padding: 0;
     border: 0;
     background: transparent;
     color: var(--color-primary);
-    font-size: 0.8125rem;
-    text-decoration: underline;
     cursor: pointer;
+    transition: color 160ms ease;
+  }
+
+  :global(.association-carousel-toggle:hover) {
+    color: var(--color-accent);
+  }
+
+  :global(.association-carousel-toggle svg) {
+    width: 14px;
+    height: 14px;
   }
 
   :global(.association-carousel-toggle:focus-visible),
