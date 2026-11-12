@@ -154,8 +154,8 @@ const linesOfAction = [
       />
       <div class="association-carousel-dots" role="group" aria-label="Elegir diapositiva">
         <button type="button" class="association-carousel-toggle" data-carousel-toggle aria-pressed="false" aria-label="Pausar rotación automática">
-          <PauseIcon aria-hidden="true" data-icon-pause />
-          <PlayIcon aria-hidden="true" data-icon-play hidden />
+          <PauseIcon aria-hidden="true" class="icon-pause" />
+          <PlayIcon aria-hidden="true" class="icon-play" />
         </button>
         {Array.from({ length: 5 }, (_, index) => (
           <button
@@ -239,42 +239,22 @@ const linesOfAction = [
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const toggle = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
       let paused = false;
-      // Set when the user explicitly resumes: the toggle itself holds focus and the
-      // pointer, so hover/focus must not suppress the rotation they just asked for.
-      let resumedByUser = false;
-      let timer: number | undefined;
-      const startTimer = () => {
-        window.clearInterval(timer);
-        timer = window.setInterval(() => {
-          const interacting = carousel.matches(":hover") || carousel.contains(document.activeElement);
-          if (paused || (interacting && !resumedByUser)) return;
-          api.scrollNext();
-        }, 10000);
-      };
+      const toggle = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
       const setPaused = (value: boolean) => {
         paused = value;
-        resumedByUser = false;
-        if (!toggle) return;
-        toggle.setAttribute("aria-pressed", String(paused));
-        toggle.setAttribute("aria-label", paused ? "Reanudar rotación automática" : "Pausar rotación automática");
-        toggle.querySelector<SVGElement>("[data-icon-pause]")!.toggleAttribute("hidden", paused);
-        toggle.querySelector<SVGElement>("[data-icon-play]")!.toggleAttribute("hidden", !paused);
+        toggle?.setAttribute("aria-pressed", String(paused));
       };
-      toggle?.addEventListener("click", () => {
-        setPaused(!paused);
-        if (!paused) {
-          resumedByUser = true;
-          startTimer();
-        }
-      });
+
+      toggle?.addEventListener("click", () => setPaused(!paused));
       // Manual navigation means the user is in control: stop the automatic rotation.
       carousel
         .querySelectorAll("[data-carousel-dot], [data-carousel-previous], [data-carousel-next]")
         .forEach((control) => control.addEventListener("click", () => setPaused(true)));
 
-      startTimer();
+      window.setInterval(() => {
+        if (!paused) api.scrollNext();
+      }, 10000);
     };
 
     carousel.addEventListener("carousel:init", initializeControls);
@@ -449,6 +429,15 @@ const linesOfAction = [
     color: var(--color-primary);
     cursor: pointer;
     transition: color 160ms ease;
+  }
+
+  :global(.association-carousel-toggle .icon-play),
+  :global(.association-carousel-toggle[aria-pressed="true"] .icon-pause) {
+    display: none;
+  }
+
+  :global(.association-carousel-toggle[aria-pressed="true"] .icon-play) {
+    display: block;
   }
 
   :global(.association-carousel-toggle:hover) {
