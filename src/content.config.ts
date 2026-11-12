@@ -10,7 +10,9 @@ const blog = defineCollection({
       message: '"Todas" es una categoría reservada para el filtro de publicaciones.',
     }),
     date: z.iso.date(),
-    description: z.string().trim().min(1),
+    // Search engines show roughly 110-160 characters of the description in results.
+    description: z.string().trim().min(110, "La descripción debe tener al menos 110 caracteres para aprovechar el fragmento en buscadores.")
+      .max(160, "La descripción no debe superar los 160 caracteres: los buscadores la recortan."),
     author: reference("authors").optional(),
     image: image().optional(),
     imageAlt: z.string().default(""),

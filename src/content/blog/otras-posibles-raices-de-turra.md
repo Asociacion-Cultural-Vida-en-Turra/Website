@@ -2,7 +2,7 @@
 title: "Otras posibles raíces de Turra"
 category: "La historia de Turra de Alba"
 date: "2026-11-08"
-description: "Otras posibles raíces de Turra"
+description: "El origen del nombre de Turra: la raíz prerromana Tur-/Dur-, ligada al agua y a los cauces que erosionan, y su relación con la fuente de las Cárcavas."
 image: "../../assets/otras-posibles-raices-de-turra/regato.png"
 imageAlt: "Otras posibles raíces de Turra"
 author: "maria-concepcion-curto-ciudad"

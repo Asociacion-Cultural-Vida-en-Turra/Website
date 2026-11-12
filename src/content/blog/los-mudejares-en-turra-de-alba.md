@@ -2,7 +2,7 @@
 title: "Los mudéjares en Turra de Alba"
 category: "La historia de Turra de Alba"
 date: "2026-10-25"
-description: "La historia de los mudéjares en Turra de Alba"
+description: "Cómo llegaron los mudéjares a Turra de Alba con la repoblación cristiana de la cuenca del Duero (siglos XI-XIII) y qué legado dejaron en el pueblo."
 image: "../../assets/mudejares/mudejares.jpg"
 imageAlt: "Los mudéjares en Turra de Alba"
 author: "maria-concepcion-curto-ciudad"
