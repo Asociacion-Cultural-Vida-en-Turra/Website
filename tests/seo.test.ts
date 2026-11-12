@@ -111,6 +111,17 @@ test("the home page describes the organization and the website in JSON-LD", () =
   assert.deepEqual(types, ["Organization", "WebSite"]);
 });
 
+test("the gallery page describes every album in JSON-LD", () => {
+  const [collection] = jsonLdBlocks(readPage("galeria/"));
+  const albums = collection.hasPart as { "@type": string; name: string; image: string }[];
+  assert.equal(collection["@type"], "CollectionPage");
+  assert.ok(albums.length > 0, "no albums listed");
+  for (const album of albums) {
+    assert.equal(album["@type"], "ImageGallery");
+    assert.ok(album.name && album.image.startsWith("https://"), `incomplete album ${album.name}`);
+  }
+});
+
 describe("every blog post", () => {
   test("is marked as an article with its publication date", () => {
     forEach(posts, (html) => {
