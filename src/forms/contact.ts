@@ -1,10 +1,11 @@
 import type { FormConfig } from "./types";
+import { SITE_NAME } from "../consts";
 
 export const contactForm = {
   legend: "Formulario de contacto",
   submitLabel: "Enviar mensaje",
   accessKey: import.meta.env.PUBLIC_WEB3FORMS_KEY,
-  subject: "Vida en Turra · Nuevo mensaje de contacto",
+  subject: `${SITE_NAME} · Nuevo mensaje de contacto`,
   note: "Todos los campos son obligatorios.",
   successMessage: "Tu mensaje se ha enviado. Gracias por contactar con la asociación.",
   fields: [

@@ -1,5 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { ORGANIZATION_NAME, SITE_NAME } from "../consts";
 import Hero from "@components/Hero.astro";
 import AssociationCarousel from "@components/association/AssociationCarousel.astro";
 import BlogSection from "@components/BlogSection.astro";
@@ -7,19 +8,19 @@ import ContactSection from "@components/ContactSection.astro";
 ---
 
 <Layout
-	title="Asociación Cultural y Medioambiental Vida en Turra"
+	title={ORGANIZATION_NAME}
 	suffix={false}
 	jsonLd={[
 		{
 			"@type": "Organization",
 			"@id": new URL(import.meta.env.BASE_URL, Astro.site).href + "#organization",
-			name: "Asociación Cultural y Medioambiental Vida en Turra",
+			name: ORGANIZATION_NAME,
 			url: new URL(import.meta.env.BASE_URL, Astro.site).href,
 			address: { "@type": "PostalAddress", addressLocality: "Turra de Alba", postalCode: "37871", addressRegion: "Salamanca", addressCountry: "ES" },
 		},
 		{
 			"@type": "WebSite",
-			name: "Vida en Turra",
+			name: SITE_NAME,
 			url: new URL(import.meta.env.BASE_URL, Astro.site).href,
 			inLanguage: "es",
 		},
