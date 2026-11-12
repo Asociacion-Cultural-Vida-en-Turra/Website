@@ -241,13 +241,19 @@ const linesOfAction = [
 
       const toggle = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
       let paused = false;
-      toggle?.addEventListener("click", () => {
-        paused = !paused;
+      const setPaused = (value: boolean) => {
+        paused = value;
+        if (!toggle) return;
         toggle.setAttribute("aria-pressed", String(paused));
         toggle.setAttribute("aria-label", paused ? "Reanudar rotación automática" : "Pausar rotación automática");
         toggle.querySelector<SVGElement>("[data-icon-pause]")!.toggleAttribute("hidden", paused);
         toggle.querySelector<SVGElement>("[data-icon-play]")!.toggleAttribute("hidden", !paused);
-      });
+      };
+      toggle?.addEventListener("click", () => setPaused(!paused));
+      // Manual navigation means the user is in control: stop the automatic rotation.
+      carousel
+        .querySelectorAll("[data-carousel-dot], [data-carousel-previous], [data-carousel-next]")
+        .forEach((control) => control.addEventListener("click", () => setPaused(true)));
 
       window.setInterval(() => {
         if (paused || carousel.matches(":hover") || carousel.contains(document.activeElement)) return;
@@ -414,29 +420,19 @@ const linesOfAction = [
     inset: -11px 0;
   }
 
-  /* Visible only for keyboard focus: mouse users already pause by hovering. */
   :global(.association-carousel-toggle) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 0;
+    width: 1.5rem;
     height: 1.5rem;
+    margin-right: 0.75rem;
     padding: 0;
-    overflow: hidden;
     border: 0;
     background: transparent;
     color: var(--color-primary);
-    opacity: 0;
     cursor: pointer;
-  }
-
-  :global(.association-carousel-toggle:focus-visible) {
-    width: 1.5rem;
-    margin-right: 0.5rem;
-    opacity: 1;
-    outline: 3px solid var(--color-focus-ring);
-    outline-offset: 2px;
-    overflow: visible;
+    transition: color 160ms ease;
   }
 
   :global(.association-carousel-toggle:hover) {
@@ -444,8 +440,14 @@ const linesOfAction = [
   }
 
   :global(.association-carousel-toggle svg) {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+
+  :global(.association-carousel-toggle:focus-visible) {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 
   :global(.association-carousel-dot:focus-visible) {
