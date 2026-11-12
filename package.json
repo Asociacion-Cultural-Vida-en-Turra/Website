@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "preview": "astro preview",
     "astro": "astro",
@@ -47,9 +48,5 @@
     "lint-staged": "^17.5.1",
     "prettier": "3.9.8",
     "typescript-eslint": "^8.70.1"
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
   }
 }
